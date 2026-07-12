@@ -1,0 +1,51 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Tap Payments
+providerId: tap-payments
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Payments
+- Fintech
+- Payment Gateway
+- MENA
+- Rate Limiting
+- Quotas
+description: >-
+  Tap Payments does not publish fixed numeric rate limits for its REST API in the
+  public developer reference. As a card-present/card-not-present payment gateway,
+  throughput is governed operationally - by acquirer and scheme limits, fraud and
+  velocity controls, and per-merchant risk configuration - rather than by a
+  published per-minute request cap. Clients should treat the API as rate-limited
+  in principle, handle HTTP 429 responses with exponential backoff, and rely on
+  idempotency/reference fields to avoid duplicate charges on retry.
+notes: >-
+  No numeric per-account or per-endpoint request limits are documented as of the
+  review date. Verify any limits and burst behavior directly with Tap during
+  reconciliation, especially for high-volume or marketplace integrations.
+sources:
+- https://developers.tap.company/docs/get-started
+- https://developers.tap.company/reference/api-endpoint
+responseCodes:
+  throttled: 429
+limits:
+- name: REST API Requests
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric request-rate limit is documented for the Tap REST API.
+- name: Payment Velocity / Fraud Controls
+  scope: merchant
+  metric: transactions
+  limit: risk-configured
+  notes: Transaction throughput is subject to scheme, acquirer, and per-merchant fraud/velocity rules rather than a documented API cap.
+policies:
+- name: Backoff Strategy
+  description: On HTTP 429, back off exponentially with jitter and retry idempotently.
+- name: Idempotent Retries
+  description: Use the reference / metadata fields on charges to correlate and de-duplicate retried payment requests.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

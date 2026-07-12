@@ -1,0 +1,111 @@
+aid: tap-payments
+name: Tap Payments
+review:
+  question: Does Tap Payments expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-12'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Tap Payments' public developer surface is
+    request/response REST over HTTPS (base https://api.tap.company/v2),
+    complemented by server-to-server webhooks. The webhooks are outbound HTTP
+    POST callbacks (Tap calls "Instant Payment Notification") to a merchant-hosted
+    endpoint - they are HTTP push, not a WebSocket or SSE stream, so there is no
+    server-push transport on Tap's own API to model in AsyncAPI.
+findings:
+  summary: |
+    Tap Payments does not publish a documented public WebSocket API. Tap is a
+    MENA payment gateway. Its public API is REST over HTTPS at
+    https://api.tap.company/v2, authenticated with a secret API key sent as a
+    Bearer token (test keys sk_test_..., live keys sk_live_...), with separate
+    test and live modes. Core resources are Charges, Authorize, Refunds,
+    Customers, Tokens, Cards, Invoices, Payouts, and Business/merchant
+    onboarding. Asynchronous payment-state notifications are delivered by
+    webhooks - outbound HTTP POST callbacks to a merchant endpoint, signed with
+    an HMAC-SHA256 hashstring header. No realtime, bidirectional, or streaming
+    WebSocket (ws:// or wss://) endpoint is documented anywhere in Tap's
+    developer reference as of the review date.
+  accessModel: |
+    Self-serve. Merchants register on the Tap dashboard, obtain secret and
+    publishable keys, and can build fully against test mode immediately. Live
+    processing and payouts require an approved, KYC-verified merchant account in
+    a supported market (GCC and Egypt). The endpoint paths and HTTP methods below
+    are grounded in Tap's public developer reference and its published OpenAPI
+    index at https://developers.tap.company/llms.txt. Request/response property
+    schemas in the OpenAPI file are modeled (representative common fields), not a
+    verbatim reproduction of Tap's object schemas.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.tap.company/v2
+      documented: true
+      note: All core payment operations are request/response REST over HTTPS.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Outbound HTTP POST callbacks (Instant Payment Notification) to a merchant endpoint, signed with an HMAC-SHA256 hashstring header. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented anywhere in Tap's developer reference as of the review date.
+  endpointsConfirmed:
+    - POST   https://api.tap.company/v2/charges
+    - GET    https://api.tap.company/v2/charges
+    - GET    https://api.tap.company/v2/charges/{charge_id}
+    - POST   https://api.tap.company/v2/authorize
+    - POST   https://api.tap.company/v2/refunds
+    - POST   https://api.tap.company/v2/tokens
+    - GET    https://api.tap.company/v2/tokens/{token_id}
+    - POST   https://api.tap.company/v2/customers
+    - GET    https://api.tap.company/v2/customers/{customer_id}
+    - POST   https://api.tap.company/v2/invoices
+    - GET    https://api.tap.company/v2/payouts
+    - GET    https://api.tap.company/v2/payouts/{payout_id}
+    - POST   https://api.tap.company/v2/businesses
+    - GET    https://api.tap.company/v2/destinations/{destination_id}
+  endpointsModeled:
+    - PUT    https://api.tap.company/v2/charges/{charge_id}
+    - GET    https://api.tap.company/v2/authorize/{authorize_id}
+    - GET    https://api.tap.company/v2/refunds/{refund_id}
+    - PUT    https://api.tap.company/v2/customers/{customer_id}
+    - DELETE https://api.tap.company/v2/customers/{customer_id}
+    - GET    https://api.tap.company/v2/card/{customer_id}/{card_id}
+    - DELETE https://api.tap.company/v2/card/{customer_id}/{card_id}
+    - GET    https://api.tap.company/v2/invoices/{invoice_id}
+  modeledNote: |
+    "endpointsConfirmed" are directly attested in Tap's developer reference and
+    OpenAPI index (method + path). "endpointsModeled" follow Tap's documented
+    REST conventions and resource set but their exact method or path (for example
+    PUT vs PATCH for updates, and the /card/{customer_id}/{card_id} form for
+    saved cards) should be reconciled against the live reference. The Cards paths
+    are modeled on Tap's historical card-on-file structure; the OpenAPI index
+    also lists a flatter /cards form.
+sources:
+  - url: https://developers.tap.company/docs/get-started
+    type: Documentation
+    note: Overview and getting started; test vs live modes and dashboard keys.
+  - url: https://developers.tap.company/reference/api-endpoint
+    type: Documentation
+    note: Bearer secret-key authentication; points to the llms.txt OpenAPI index.
+  - url: https://developers.tap.company/llms.txt
+    type: OpenAPI
+    note: Tap's own machine-readable index listing endpoints in OpenAPI form. Base host api.tap.company/v2.
+  - url: https://developers.tap.company/reference/create-a-charge
+    type: APIReference
+    note: Confirms POST https://api.tap.company/v2/charges and base host.
+  - url: https://developers.tap.company/reference/tokens
+    type: APIReference
+    note: Token creation and retrieval (GET /tokens/{token_id}); tokens are single-use.
+  - url: https://developers.tap.company/docs/webhook
+    type: Documentation
+    note: Webhooks are HTTP POST callbacks with an HMAC-SHA256 hashstring header. No WebSocket.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Tap's own public API is
+    request/response REST plus outbound HTTP webhooks. No AsyncAPI document was
+    created because there is no server-push transport (WebSocket or SSE) on Tap's
+    own API to model; webhooks are point-to-point HTTP callbacks to a
+    merchant-hosted endpoint.

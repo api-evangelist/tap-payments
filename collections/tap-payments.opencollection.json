@@ -1,0 +1,267 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tap Payments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{secretApiKey}}"
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Charges", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a charge.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/charges",
+            "body": { "type": "json", "data": "{\n  \"amount\": 1,\n  \"currency\": \"KWD\",\n  \"threeDSecure\": true,\n  \"customer\": { \"first_name\": \"Test\", \"email\": \"test@example.com\" },\n  \"source\": { \"id\": \"src_card\" },\n  \"redirect\": { \"url\": \"https://example.com/return\" }\n}" }
+          },
+          "docs": "Initiates a charge to charge a card or other payment source."
+        },
+        {
+          "info": { "name": "List all charges.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.tap.company/v2/charges" },
+          "docs": "Lists charges, filterable by date, status, method, customer, and charge id."
+        },
+        {
+          "info": { "name": "Retrieve a charge.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/charges/:charge_id",
+            "params": [
+              { "name": "charge_id", "value": "", "type": "path", "description": "The id of the charge." }
+            ]
+          },
+          "docs": "Retrieves the details of a charge by its id."
+        },
+        {
+          "info": { "name": "Update a charge.", "type": "http" },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tap.company/v2/charges/:charge_id",
+            "params": [
+              { "name": "charge_id", "value": "", "type": "path", "description": "The id of the charge." }
+            ],
+            "body": { "type": "json", "data": "{\n  \"description\": \"Updated description\"\n}" }
+          },
+          "docs": "Updates mutable fields on a charge (modeled: verify method against the live reference)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Authorize", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create an authorize.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/authorize",
+            "body": { "type": "json", "data": "{\n  \"amount\": 1,\n  \"currency\": \"KWD\",\n  \"customer\": { \"first_name\": \"Test\", \"email\": \"test@example.com\" },\n  \"source\": { \"id\": \"src_card\" },\n  \"redirect\": { \"url\": \"https://example.com/return\" }\n}" }
+          },
+          "docs": "Authorizes (holds) funds on a card without capturing."
+        },
+        {
+          "info": { "name": "Retrieve an authorize.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/authorize/:authorize_id",
+            "params": [
+              { "name": "authorize_id", "value": "", "type": "path", "description": "The id of the authorize object." }
+            ]
+          },
+          "docs": "Retrieves an authorize object by its id."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Refunds", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a refund.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/refunds",
+            "body": { "type": "json", "data": "{\n  \"charge_id\": \"chg_XXXX\",\n  \"amount\": 1,\n  \"currency\": \"KWD\",\n  \"reason\": \"requested_by_customer\"\n}" }
+          },
+          "docs": "Issues a full or partial refund against a captured charge."
+        },
+        {
+          "info": { "name": "List all refunds.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.tap.company/v2/refunds" },
+          "docs": "Lists refunds, filterable by charge and date."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Customers", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a customer.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/customers",
+            "body": { "type": "json", "data": "{\n  \"first_name\": \"Test\",\n  \"last_name\": \"User\",\n  \"email\": \"test@example.com\"\n}" }
+          },
+          "docs": "Creates a customer record used to save cards and reconcile future charges."
+        },
+        {
+          "info": { "name": "Retrieve a customer.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/customers/:customer_id",
+            "params": [
+              { "name": "customer_id", "value": "", "type": "path", "description": "The id of the customer." }
+            ]
+          },
+          "docs": "Retrieves a customer by id."
+        },
+        {
+          "info": { "name": "List all customers.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.tap.company/v2/customers" },
+          "docs": "Lists customers in the account."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Tokens", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a token (card).", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/tokens",
+            "body": { "type": "json", "data": "{\n  \"card\": {\n    \"number\": \"5123450000000008\",\n    \"exp_month\": 5,\n    \"exp_year\": 27,\n    \"cvc\": \"100\",\n    \"name\": \"Test User\"\n  }\n}" }
+          },
+          "docs": "Tokenizes raw card data into a single-use token id. Tokens cannot be stored or reused."
+        },
+        {
+          "info": { "name": "Retrieve a token.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/tokens/:token_id",
+            "params": [
+              { "name": "token_id", "value": "", "type": "path", "description": "The id of the token." }
+            ]
+          },
+          "docs": "Retrieves a token by its id."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Cards", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List all cards.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/card/:customer_id",
+            "params": [
+              { "name": "customer_id", "value": "", "type": "path", "description": "The id of the customer." }
+            ]
+          },
+          "docs": "Lists the saved cards (card-on-file) stored against a customer (modeled path)."
+        },
+        {
+          "info": { "name": "Retrieve a card.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/card/:customer_id/:card_id",
+            "params": [
+              { "name": "customer_id", "value": "", "type": "path", "description": "The id of the customer." },
+              { "name": "card_id", "value": "", "type": "path", "description": "The id of the saved card." }
+            ]
+          },
+          "docs": "Retrieves a saved card by id for a given customer (modeled path)."
+        },
+        {
+          "info": { "name": "Delete a card.", "type": "http" },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tap.company/v2/card/:customer_id/:card_id",
+            "params": [
+              { "name": "customer_id", "value": "", "type": "path", "description": "The id of the customer." },
+              { "name": "card_id", "value": "", "type": "path", "description": "The id of the saved card." }
+            ]
+          },
+          "docs": "Deletes a saved card from a customer (modeled path)."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Invoices", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create an invoice.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/invoices",
+            "body": { "type": "json", "data": "{\n  \"amount\": 10,\n  \"currency\": \"KWD\",\n  \"customer\": { \"first_name\": \"Test\", \"email\": \"test@example.com\" }\n}" }
+          },
+          "docs": "Creates a hosted invoice that produces a payable link delivered by email or SMS."
+        },
+        {
+          "info": { "name": "List all invoices.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.tap.company/v2/invoices" },
+          "docs": "Lists invoices in the account."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Payouts", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "List all payouts.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.tap.company/v2/payouts" },
+          "docs": "Lists settlements (payouts) deposited to the merchant's bank account."
+        },
+        {
+          "info": { "name": "Retrieve a payout.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/payouts/:payout_id",
+            "params": [
+              { "name": "payout_id", "value": "", "type": "path", "description": "The id of the payout." }
+            ]
+          },
+          "docs": "Retrieves a payout (settlement) by id."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Business", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Create a business.", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/businesses",
+            "body": { "type": "json", "data": "{}" }
+          },
+          "docs": "Onboards a business entity for marketplace / platform settlement."
+        },
+        {
+          "info": { "name": "List all businesses.", "type": "http" },
+          "http": { "method": "GET", "url": "https://api.tap.company/v2/businesses" },
+          "docs": "Lists onboarded businesses."
+        },
+        {
+          "info": { "name": "Retrieve a destination.", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/destinations/:destination_id",
+            "params": [
+              { "name": "destination_id", "value": "", "type": "path", "description": "The id of the settlement destination." }
+            ]
+          },
+          "docs": "Retrieves a settlement destination (bank account) that funds are paid out to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

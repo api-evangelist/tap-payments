@@ -1,0 +1,35 @@
+generated: '2026-07-12'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.tap.company
+  https: true
+  tls_version: TLSv1.3
+  cert_issuer: GoDaddy Secure Certificate Authority - G2
+  cert_expires: Nov 29 13:20:39 2026 GMT
+  hsts: false
+- host: developers.tap.company
+  https: true
+  tls_version: TLSv1.3
+  cert_issuer: Let's Encrypt
+  cert_expires: Sep  2 02:00:34 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: api.tap.company
+  https: true
+  tls_version: TLSv1.2
+  cert_issuer: GoDaddy Secure Certificate Authority - G2
+  cert_expires: Dec  5 11:12:48 2026 GMT
+  hsts: true
+  hsts_max_age: 15552000
+  hsts_include_subdomains: true
+  note: Bare host returns HTTP 404; the API base path is /v2. Fronted by an AWS ELB in eu-west-1.
+domains:
+- domain: tap.company
+  dnssec: false
+  caa: []
+  spf: true
+  spf_record: v=spf1 include:_spf.google.com include:mailgun.org include:spf.mandrillapp.com include:mg.tap.com.kw ~all
+  dmarc: true
+  dmarc_policy: quarantine
+  dmarc_rua: mailto:email_dmarc_reports@tap.company

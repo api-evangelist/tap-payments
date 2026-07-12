@@ -1,0 +1,116 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Tap Payments
+providerId: tap-payments
+created: '2026-07-12'
+modified: '2026-07-12'
+reconciled: false
+tags:
+- Payments
+- Fintech
+- Payment Gateway
+- MENA
+- Plans
+description: >-
+  Tap Payments does not sell API access as a subscription. Pricing is
+  transaction-based: there is no fee to sign up, get keys, and build against test
+  mode, and merchants pay a per-transaction processing fee only on live payments.
+  Headline rates commonly cited for the region are around 2.75% per transaction
+  for local/standard cards and about 3.25% for international cards (plus any FX),
+  with no monthly fee on standard onboarding; effective all-in cost varies by
+  country, payment method (mada, KNET, Benefit, Visa, Mastercard, wallets),
+  settlement configuration, and negotiated/enterprise terms. Exact rates are set
+  per merchant during onboarding and are not reconciled here.
+notes: >-
+  The per-transaction percentages above are indicative figures drawn from public
+  third-party comparisons, not an official Tap rate card; Tap publishes rates per
+  market and negotiates volume/enterprise pricing. Verify current pricing for your
+  country and methods directly with Tap during reconciliation. The API itself
+  carries no separate license or subscription fee.
+sources:
+- https://www.tap.company
+- https://developers.tap.company/docs/get-started
+plans:
+- id: tap-test-mode
+  name: Test Mode (Developer)
+  type: free
+  description: >-
+    Full access to build and test the API against test keys (sk_test_...) with no
+    fee and no live money movement. Requires only a dashboard account.
+  entries:
+  - label: API Test Access
+    name: api_test_access
+    type: flat
+    metric: access
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free
+    userMultiplied: false
+  elements:
+  - name: Test Keys
+  - name: All API Resources
+  - name: Webhooks (test)
+- id: tap-standard
+  name: Standard (Per-Transaction)
+  type: usage
+  description: >-
+    Live payment acceptance billed as a percentage fee per successful
+    transaction, with no monthly fee on standard onboarding. Rate depends on
+    country and payment method (local schemes such as mada, KNET, Benefit vs
+    international cards and wallets). Requires a KYC-approved merchant account.
+  entries:
+  - label: Standard / Local Card Transaction Fee
+    name: standard_card_fee
+    type: usage
+    metric: transaction
+    limit: -1
+    timeFrame: month
+    geo: mena
+    unit: 1
+    price: approx 2.75% per transaction (indicative; varies by country/method)
+    userMultiplied: false
+  - label: International Card Transaction Fee
+    name: international_card_fee
+    type: usage
+    metric: transaction
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: approx 3.25% per transaction plus FX (indicative; varies)
+    userMultiplied: false
+  elements:
+  - name: Live Keys
+  - name: Cards (Visa, Mastercard, Amex)
+  - name: Local Schemes (mada, KNET, Benefit)
+  - name: Wallets (Apple Pay, Google Pay)
+  - name: Payouts / Settlement
+  - name: Webhooks
+- id: tap-enterprise
+  name: Enterprise / Custom
+  type: enterprise
+  description: >-
+    Negotiated per-transaction rates and terms for high-volume merchants,
+    marketplaces, and platforms using the Business API for sub-merchant
+    onboarding and split settlement. Contact Tap sales.
+  entries:
+  - label: Negotiated Rate
+    name: enterprise_rate
+    type: usage
+    metric: transaction
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Volume Pricing
+  - name: Marketplace / Split Settlement
+  - name: Dedicated Support
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,279 @@
+{
+  "info": {
+    "name": "Tap Payments API",
+    "description": "REST API for Tap Payments, a payment gateway for the Middle East and North Africa. Base URL: https://api.tap.company/v2. Authenticate with a secret API key as a Bearer token (test keys sk_test_..., live keys sk_live_...). Endpoint paths and methods are grounded in Tap's public developer reference and OpenAPI index (developers.tap.company/llms.txt); example request bodies are representative.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{secretApiKey}}", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.tap.company/v2", "type": "string" },
+    { "key": "secretApiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Charges",
+      "item": [
+        {
+          "name": "Create a charge",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 1,\n  \"currency\": \"KWD\",\n  \"threeDSecure\": true,\n  \"customer\": { \"first_name\": \"Test\", \"email\": \"test@example.com\" },\n  \"source\": { \"id\": \"src_card\" },\n  \"redirect\": { \"url\": \"https://example.com/return\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/charges", "host": ["{{baseUrl}}"], "path": ["charges"] },
+            "description": "Initiates a charge to charge a card or other payment source."
+          }
+        },
+        {
+          "name": "List all charges",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/charges", "host": ["{{baseUrl}}"], "path": ["charges"] },
+            "description": "Lists charges, filterable by date, status, method, customer, and charge id."
+          }
+        },
+        {
+          "name": "Retrieve a charge",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/charges/:charge_id", "host": ["{{baseUrl}}"], "path": ["charges", ":charge_id"], "variable": [{ "key": "charge_id", "value": "" }] },
+            "description": "Retrieves the details of a charge by its id."
+          }
+        },
+        {
+          "name": "Update a charge",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"description\": \"Updated description\"\n}" },
+            "url": { "raw": "{{baseUrl}}/charges/:charge_id", "host": ["{{baseUrl}}"], "path": ["charges", ":charge_id"], "variable": [{ "key": "charge_id", "value": "" }] },
+            "description": "Updates mutable fields on a charge (modeled: verify method against the live reference)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authorize",
+      "item": [
+        {
+          "name": "Create an authorize",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 1,\n  \"currency\": \"KWD\",\n  \"customer\": { \"first_name\": \"Test\", \"email\": \"test@example.com\" },\n  \"source\": { \"id\": \"src_card\" },\n  \"redirect\": { \"url\": \"https://example.com/return\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/authorize", "host": ["{{baseUrl}}"], "path": ["authorize"] },
+            "description": "Authorizes (holds) funds on a card without capturing."
+          }
+        },
+        {
+          "name": "Retrieve an authorize",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/authorize/:authorize_id", "host": ["{{baseUrl}}"], "path": ["authorize", ":authorize_id"], "variable": [{ "key": "authorize_id", "value": "" }] },
+            "description": "Retrieves an authorize object by its id."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Refunds",
+      "item": [
+        {
+          "name": "Create a refund",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"charge_id\": \"chg_XXXX\",\n  \"amount\": 1,\n  \"currency\": \"KWD\",\n  \"reason\": \"requested_by_customer\"\n}" },
+            "url": { "raw": "{{baseUrl}}/refunds", "host": ["{{baseUrl}}"], "path": ["refunds"] },
+            "description": "Issues a full or partial refund against a captured charge."
+          }
+        },
+        {
+          "name": "List all refunds",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/refunds", "host": ["{{baseUrl}}"], "path": ["refunds"] },
+            "description": "Lists refunds, filterable by charge and date."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "Create a customer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"first_name\": \"Test\",\n  \"last_name\": \"User\",\n  \"email\": \"test@example.com\"\n}" },
+            "url": { "raw": "{{baseUrl}}/customers", "host": ["{{baseUrl}}"], "path": ["customers"] },
+            "description": "Creates a customer record used to save cards and reconcile future charges."
+          }
+        },
+        {
+          "name": "Retrieve a customer",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/customers/:customer_id", "host": ["{{baseUrl}}"], "path": ["customers", ":customer_id"], "variable": [{ "key": "customer_id", "value": "" }] },
+            "description": "Retrieves a customer by id."
+          }
+        },
+        {
+          "name": "List all customers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/customers", "host": ["{{baseUrl}}"], "path": ["customers"] },
+            "description": "Lists customers in the account."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tokens",
+      "item": [
+        {
+          "name": "Create a token (card)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"card\": {\n    \"number\": \"5123450000000008\",\n    \"exp_month\": 5,\n    \"exp_year\": 27,\n    \"cvc\": \"100\",\n    \"name\": \"Test User\"\n  }\n}" },
+            "url": { "raw": "{{baseUrl}}/tokens", "host": ["{{baseUrl}}"], "path": ["tokens"] },
+            "description": "Tokenizes raw card data into a single-use token id. Tokens cannot be stored or reused."
+          }
+        },
+        {
+          "name": "Retrieve a token",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/tokens/:token_id", "host": ["{{baseUrl}}"], "path": ["tokens", ":token_id"], "variable": [{ "key": "token_id", "value": "" }] },
+            "description": "Retrieves a token by its id."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cards",
+      "item": [
+        {
+          "name": "List all cards",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/card/:customer_id", "host": ["{{baseUrl}}"], "path": ["card", ":customer_id"], "variable": [{ "key": "customer_id", "value": "" }] },
+            "description": "Lists the saved cards (card-on-file) stored against a customer (modeled path)."
+          }
+        },
+        {
+          "name": "Retrieve a card",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/card/:customer_id/:card_id", "host": ["{{baseUrl}}"], "path": ["card", ":customer_id", ":card_id"], "variable": [{ "key": "customer_id", "value": "" }, { "key": "card_id", "value": "" }] },
+            "description": "Retrieves a saved card by id for a given customer (modeled path)."
+          }
+        },
+        {
+          "name": "Delete a card",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/card/:customer_id/:card_id", "host": ["{{baseUrl}}"], "path": ["card", ":customer_id", ":card_id"], "variable": [{ "key": "customer_id", "value": "" }, { "key": "card_id", "value": "" }] },
+            "description": "Deletes a saved card from a customer (modeled path)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invoices",
+      "item": [
+        {
+          "name": "Create an invoice",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 10,\n  \"currency\": \"KWD\",\n  \"customer\": { \"first_name\": \"Test\", \"email\": \"test@example.com\" }\n}" },
+            "url": { "raw": "{{baseUrl}}/invoices", "host": ["{{baseUrl}}"], "path": ["invoices"] },
+            "description": "Creates a hosted invoice that produces a payable link delivered by email or SMS."
+          }
+        },
+        {
+          "name": "List all invoices",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/invoices", "host": ["{{baseUrl}}"], "path": ["invoices"] },
+            "description": "Lists invoices in the account."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payouts",
+      "item": [
+        {
+          "name": "List all payouts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/payouts", "host": ["{{baseUrl}}"], "path": ["payouts"] },
+            "description": "Lists settlements (payouts) deposited to the merchant's bank account."
+          }
+        },
+        {
+          "name": "Retrieve a payout",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/payouts/:payout_id", "host": ["{{baseUrl}}"], "path": ["payouts", ":payout_id"], "variable": [{ "key": "payout_id", "value": "" }] },
+            "description": "Retrieves a payout (settlement) by id."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Business",
+      "item": [
+        {
+          "name": "Create a business",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": { "raw": "{{baseUrl}}/businesses", "host": ["{{baseUrl}}"], "path": ["businesses"] },
+            "description": "Onboards a business entity for marketplace / platform settlement."
+          }
+        },
+        {
+          "name": "List all businesses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/businesses", "host": ["{{baseUrl}}"], "path": ["businesses"] },
+            "description": "Lists onboarded businesses."
+          }
+        },
+        {
+          "name": "Retrieve a destination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/destinations/:destination_id", "host": ["{{baseUrl}}"], "path": ["destinations", ":destination_id"], "variable": [{ "key": "destination_id", "value": "" }] },
+            "description": "Retrieves a settlement destination (bank account) that funds are paid out to."
+          }
+        }
+      ]
+    }
+  ]
+}
