@@ -193,6 +193,8 @@ apis:
     recurring payment changes state. Payloads are signed with an HMAC-SHA256
     hashstring header for verification. This is HTTP push, not a WebSocket.
 common:
+- type: AgenticAccess
+  url: agentic-access/tap-payments-agentic-access.yml
 - type: DomainSecurity
   url: security/tap-payments-domain-security.yml
 - type: Authentication
