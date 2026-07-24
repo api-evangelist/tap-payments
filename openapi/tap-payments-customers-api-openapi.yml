@@ -1,0 +1,199 @@
+openapi: 3.0.3
+info:
+  title: Tap Payments Authorize Customers API
+  description: REST API for Tap Payments, a payment gateway and financial infrastructure provider for the Middle East and North Africa. Merchants accept online payments across the GCC and Egypt using cards (Visa, Mastercard, Amex), local schemes (mada, KNET, Benefit), and wallets (Apple Pay, Google Pay). The core flows are Charges (charge a source now), Authorize/Capture (hold then capture), Tokens (single-use tokenization of a card or wallet), Customers and Cards (vaulting for recurring / card-on-file), Refunds, Invoices, Payouts, and Business/merchant onboarding. All requests are authenticated with a secret API key passed as a Bearer token; separate test (sk_test_...) and live (sk_live_...) keys are issued from the Tap dashboard. Endpoint paths and methods are grounded in the public Tap developer reference and its published OpenAPI index (developers.tap.company/llms.txt); request and response schemas below are modeled for common fields and are not an exhaustive reproduction of Tap's object schemas - verify field-level detail against the live reference.
+  version: '1.0'
+  contact:
+    name: Tap Payments Developers
+    url: https://developers.tap.company
+  x-modeled-note: Endpoint list and HTTP methods are grounded in Tap's public developer reference and OpenAPI index. Property-level schemas are modeled (representative), not copied verbatim from Tap.
+servers:
+- url: https://api.tap.company/v2
+  description: Tap Payments production API (test vs live selected by API key)
+security:
+- bearerAuth: []
+tags:
+- name: Customers
+  description: Customer records for vaulting and recurring payments.
+paths:
+  /customers:
+    post:
+      operationId: createCustomer
+      tags:
+      - Customers
+      summary: Create a customer
+      description: Creates a customer record used to save cards and reconcile future charges.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '200':
+          description: The created customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listCustomers
+      tags:
+      - Customers
+      summary: List all customers
+      description: Lists customers in the account.
+      responses:
+        '200':
+          description: A list of customers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customer_id}:
+    parameters:
+    - $ref: '#/components/parameters/CustomerId'
+    get:
+      operationId: retrieveCustomer
+      tags:
+      - Customers
+      summary: Retrieve a customer
+      description: Retrieves a customer by id.
+      responses:
+        '200':
+          description: The requested customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCustomer
+      tags:
+      - Customers
+      summary: Update a customer
+      description: Updates an existing customer.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '200':
+          description: The updated customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCustomer
+      tags:
+      - Customers
+      summary: Delete a customer
+      description: Deletes a customer record.
+      responses:
+        '200':
+          description: Deletion confirmation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    DeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        deleted:
+          type: boolean
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          object:
+            type: string
+            example: customer
+    CustomerInput:
+      type: object
+      properties:
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: object
+          properties:
+            country_code:
+              type: string
+            number:
+              type: string
+        description:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+  parameters:
+    CustomerId:
+      name: customer_id
+      in: path
+      required: true
+      description: The id of the customer (e.g. cus_XXXXXXXX).
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Secret API key passed as a Bearer token in the Authorization header: `Authorization: Bearer sk_test_...` (test) or `sk_live_...` (live). Keys are issued from the Tap dashboard. Never expose the secret key in client-side code.'
