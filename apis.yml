@@ -10,7 +10,20 @@ description: Tap Payments is a payment gateway and financial infrastructure prov
   Tokens for saved cards, Customers, Refunds, Invoices, Payouts, and merchant
   onboarding via the Business API. Authentication is a secret API key passed as a
   Bearer token, with separate test and live keys issued from the Tap dashboard.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/tap-payments.png
 tags:
 - Payments
 - Fintech
@@ -27,155 +40,6 @@ created: '2026-07-12'
 modified: '2026-07-12'
 specificationVersion: '0.19'
 apis:
-- aid: tap-payments:tap-payments-charges-api
-  name: Tap Payments Charges API
-  tags:
-  - Charges
-  - Payments
-  - Cards
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/create-a-charge
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/docs/get-started
-    type: Documentation
-  - url: https://developers.tap.company/reference/create-a-charge
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Create, retrieve, update, and list charges to charge a card or other
-    payment source. Supports 3D Secure redirect flows, saved-card tokens, local
-    schemes (mada, KNET, Benefit), and wallets. A charge references a source (token
-    or authorize id) and a customer.
-- aid: tap-payments:tap-payments-authorize-api
-  name: Tap Payments Authorize API
-  tags:
-  - Authorize
-  - Capture
-  - Payments
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/authorize
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/reference/authorize
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Authorize (hold) funds on a card without capturing, then capture later
-    by creating a charge that references the authorize id. Supports void and
-    auto-capture windows for two-step card payments.
-- aid: tap-payments:tap-payments-refunds-api
-  name: Tap Payments Refunds API
-  tags:
-  - Refunds
-  - Payments
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/create-a-refund
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/reference/create-a-refund
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Issue full or partial refunds against a captured charge, then retrieve
-    and list refunds. Refunds reference the original charge id and settle back to the
-    original payment method.
-- aid: tap-payments:tap-payments-customers-api
-  name: Tap Payments Customers API
-  tags:
-  - Customers
-  - Vaulting
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/create-a-customer
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/reference/create-a-customer
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Create, retrieve, update, delete, and list customers. Tap issues a
-    unique customer id (returned from Charges/Authorize) that you reuse to save
-    cards, run recurring payments, and reconcile transactions.
-- aid: tap-payments:tap-payments-tokens-api
-  name: Tap Payments Tokens API
-  tags:
-  - Tokens
-  - Cards
-  - PCI
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/tokens
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/reference/tokens
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Tokenize a raw card, an encrypted card, a saved card, or a wallet
-    (Apple Pay, Samsung Pay, network token) into a single-use token id consumed by
-    the Charges or Authorize APIs. Tokens cannot be stored or reused.
-- aid: tap-payments:tap-payments-cards-api
-  name: Tap Payments Cards API
-  tags:
-  - Cards
-  - Card on File
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/retrieve-a-card
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/reference/retrieve-a-card
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Manage saved cards (card-on-file) attached to a customer - retrieve,
-    verify, list, and delete stored cards for recurring and one-click checkout.
-- aid: tap-payments:tap-payments-invoices-api
-  name: Tap Payments Invoices API
-  tags:
-  - Invoices
-  - Billing
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/create-an-invoice
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/reference/create-an-invoice
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Create, retrieve, update, and list hosted invoices that generate a
-    payable link delivered by email or SMS. Invoices carry line items, currency,
-    due dates, and customer details, and produce a charge when paid.
-- aid: tap-payments:tap-payments-payouts-api
-  name: Tap Payments Payouts API
-  tags:
-  - Payouts
-  - Settlement
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/retrieve-a-payout
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/reference/retrieve-a-payout
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Retrieve and list payouts (settlements) that Tap deposits to your
-    business bank account, with a download endpoint for reconciliation exports.
-- aid: tap-payments:tap-payments-business-api
-  name: Tap Payments Business API
-  tags:
-  - Onboarding
-  - Merchants
-  - Marketplace
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://developers.tap.company/reference/create-a-business
-  baseURL: https://api.tap.company/v2
-  properties:
-  - url: https://developers.tap.company/reference/create-a-business
-    type: APIReference
-  - url: openapi/tap-payments-openapi.yml
-    type: OpenAPI
-  description: Onboard and manage businesses, merchants, and their destinations for
-    marketplace and platform use cases - create a business, list merchants, and look
-    up destinations that funds settle to.
 - aid: tap-payments:tap-payments-webhooks
   name: Tap Payments Webhooks
   tags:
@@ -188,10 +52,280 @@ apis:
   properties:
   - url: https://developers.tap.company/docs/webhook
     type: Documentation
-  description: Server-to-server HTTP POST callbacks (Instant Payment Notification)
-    that Tap sends to your configured endpoint when a charge, authorize, invoice, or
-    recurring payment changes state. Payloads are signed with an HMAC-SHA256
-    hashstring header for verification. This is HTTP push, not a WebSocket.
+  description: >-
+    Server-to-server HTTP POST callbacks (Instant Payment Notification) that Tap sends to your configured
+    endpoint when a charge, authorize, invoice, or recurring payment changes state. Payloads are signed
+    with an HMAC-SHA256 hashstring header for verification. This is HTTP push, not a WebSocket.
+- aid: tap-payments:tap-payments-authorize-api
+  name: Tap Payments Authorize API
+  description: Authorize (hold) funds for later capture.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Authorize
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-authorize-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
+- aid: tap-payments:tap-payments-business-api
+  name: Tap Payments Business API
+  description: Business, merchant, and destination onboarding.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Business
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-business-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
+- aid: tap-payments:tap-payments-cards-api
+  name: Tap Payments Cards API
+  description: Saved cards (card-on-file) attached to a customer.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Cards
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-cards-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
+- aid: tap-payments:tap-payments-charges-api
+  name: Tap Payments Charges API
+  description: Charge a card or other payment source.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Charges
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-charges-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
+- aid: tap-payments:tap-payments-customers-api
+  name: Tap Payments Customers API
+  description: Customer records for vaulting and recurring payments.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-customers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
+- aid: tap-payments:tap-payments-invoices-api
+  name: Tap Payments Invoices API
+  description: Hosted, payable invoices.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-invoices-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
+- aid: tap-payments:tap-payments-payouts-api
+  name: Tap Payments Payouts API
+  description: Settlements paid out to the merchant.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Payouts
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-payouts-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
+- aid: tap-payments:tap-payments-refunds-api
+  name: Tap Payments Refunds API
+  description: Refund a captured charge.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Refunds
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-refunds-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
+- aid: tap-payments:tap-payments-tokens-api
+  name: Tap Payments Tokens API
+  description: Single-use tokenization of cards and wallets.
+  humanURL: https://developers.tap.company/reference/create-a-charge
+  baseURL: https://api.tap.company/v2
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/tap-payments-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://developers.tap.company/docs/get-started
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-charge
+  - type: APIReference
+    url: https://developers.tap.company/reference/authorize
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-refund
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-customer
+  - type: APIReference
+    url: https://developers.tap.company/reference/tokens
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-card
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-an-invoice
+  - type: APIReference
+    url: https://developers.tap.company/reference/retrieve-a-payout
+  - type: APIReference
+    url: https://developers.tap.company/reference/create-a-business
 common:
 - type: AgenticAccess
   url: agentic-access/tap-payments-agentic-access.yml
