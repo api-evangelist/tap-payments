@@ -1,0 +1,30 @@
+{
+  "provider": "tap-payments",
+  "sources": [
+    "tap-payments-authorize-api-openapi.yml",
+    "tap-payments-business-api-openapi.yml",
+    "tap-payments-cards-api-openapi.yml",
+    "tap-payments-charges-api-openapi.yml",
+    "tap-payments-customers-api-openapi.yml",
+    "tap-payments-invoices-api-openapi.yml",
+    "tap-payments-payouts-api-openapi.yml",
+    "tap-payments-refunds-api-openapi.yml",
+    "tap-payments-tokens-api-openapi.yml"
+  ],
+  "outputs": [
+    "tap-payments-authorize-api-openapi.yml",
+    "tap-payments-business-api-openapi.yml",
+    "tap-payments-cards-api-openapi.yml",
+    "tap-payments-charges-api-openapi.yml",
+    "tap-payments-customers-api-openapi.yml",
+    "tap-payments-invoices-api-openapi.yml",
+    "tap-payments-payouts-api-openapi.yml",
+    "tap-payments-refunds-api-openapi.yml",
+    "tap-payments-tokens-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

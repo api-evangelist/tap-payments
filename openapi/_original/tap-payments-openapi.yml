@@ -1,0 +1,1023 @@
+openapi: 3.0.3
+info:
+  title: Tap Payments API
+  description: >-
+    REST API for Tap Payments, a payment gateway and financial infrastructure
+    provider for the Middle East and North Africa. Merchants accept online
+    payments across the GCC and Egypt using cards (Visa, Mastercard, Amex),
+    local schemes (mada, KNET, Benefit), and wallets (Apple Pay, Google Pay).
+    The core flows are Charges (charge a source now), Authorize/Capture (hold
+    then capture), Tokens (single-use tokenization of a card or wallet),
+    Customers and Cards (vaulting for recurring / card-on-file), Refunds,
+    Invoices, Payouts, and Business/merchant onboarding. All requests are
+    authenticated with a secret API key passed as a Bearer token; separate
+    test (sk_test_...) and live (sk_live_...) keys are issued from the Tap
+    dashboard. Endpoint paths and methods are grounded in the public Tap
+    developer reference and its published OpenAPI index (developers.tap.company/llms.txt);
+    request and response schemas below are modeled for common fields and are
+    not an exhaustive reproduction of Tap's object schemas - verify field-level
+    detail against the live reference.
+  version: '1.0'
+  contact:
+    name: Tap Payments Developers
+    url: https://developers.tap.company
+  x-modeled-note: >-
+    Endpoint list and HTTP methods are grounded in Tap's public developer
+    reference and OpenAPI index. Property-level schemas are modeled
+    (representative), not copied verbatim from Tap.
+servers:
+  - url: https://api.tap.company/v2
+    description: Tap Payments production API (test vs live selected by API key)
+security:
+  - bearerAuth: []
+tags:
+  - name: Charges
+    description: Charge a card or other payment source.
+  - name: Authorize
+    description: Authorize (hold) funds for later capture.
+  - name: Refunds
+    description: Refund a captured charge.
+  - name: Customers
+    description: Customer records for vaulting and recurring payments.
+  - name: Tokens
+    description: Single-use tokenization of cards and wallets.
+  - name: Cards
+    description: Saved cards (card-on-file) attached to a customer.
+  - name: Invoices
+    description: Hosted, payable invoices.
+  - name: Payouts
+    description: Settlements paid out to the merchant.
+  - name: Business
+    description: Business, merchant, and destination onboarding.
+paths:
+  /charges:
+    post:
+      operationId: createCharge
+      tags:
+        - Charges
+      summary: Create a charge
+      description: >-
+        Initiates a charge to charge a card or other payment source. The source
+        may be a token id, a saved card, an authorize id (to capture), or a
+        local scheme / wallet. For 3D Secure, pass redirect.url to receive the
+        customer back after authentication.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChargeInput'
+      responses:
+        '200':
+          description: The created charge.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charge'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listCharges
+      tags:
+        - Charges
+      summary: List all charges
+      description: Lists charges, filterable by date, status, method, customer, and charge id.
+      responses:
+        '200':
+          description: A list of charges.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChargeList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /charges/{charge_id}:
+    parameters:
+      - $ref: '#/components/parameters/ChargeId'
+    get:
+      operationId: retrieveCharge
+      tags:
+        - Charges
+      summary: Retrieve a charge
+      description: Retrieves the details of a charge by its id.
+      responses:
+        '200':
+          description: The requested charge.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charge'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCharge
+      tags:
+        - Charges
+      summary: Update a charge
+      description: Updates mutable fields on a charge, such as description, metadata, or notifications.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated charge.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charge'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /authorize:
+    post:
+      operationId: createAuthorize
+      tags:
+        - Authorize
+      summary: Create an authorize
+      description: >-
+        Authorizes (holds) funds on a card without capturing. Capture later by
+        creating a charge whose source references this authorize id. For 3D
+        Secure, pass redirect.url.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChargeInput'
+      responses:
+        '200':
+          description: The created authorize.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charge'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /authorize/{authorize_id}:
+    parameters:
+      - name: authorize_id
+        in: path
+        required: true
+        description: The id of the authorize object.
+        schema:
+          type: string
+    get:
+      operationId: retrieveAuthorize
+      tags:
+        - Authorize
+      summary: Retrieve an authorize
+      description: Retrieves an authorize object by its id.
+      responses:
+        '200':
+          description: The requested authorize.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charge'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateAuthorize
+      tags:
+        - Authorize
+      summary: Update an authorize
+      description: Updates an authorize object (for example to void it or adjust metadata).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The updated authorize.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Charge'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /refunds:
+    post:
+      operationId: createRefund
+      tags:
+        - Refunds
+      summary: Create a refund
+      description: Issues a full or partial refund against a captured charge, referenced by charge_id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefundInput'
+      responses:
+        '200':
+          description: The created refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listRefunds
+      tags:
+        - Refunds
+      summary: List all refunds
+      description: Lists refunds, filterable by charge and date.
+      responses:
+        '200':
+          description: A list of refunds.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /refunds/{refund_id}:
+    parameters:
+      - name: refund_id
+        in: path
+        required: true
+        description: The id of the refund.
+        schema:
+          type: string
+    get:
+      operationId: retrieveRefund
+      tags:
+        - Refunds
+      summary: Retrieve a refund
+      description: Retrieves a refund by its id.
+      responses:
+        '200':
+          description: The requested refund.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refund'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /customers:
+    post:
+      operationId: createCustomer
+      tags:
+        - Customers
+      summary: Create a customer
+      description: Creates a customer record used to save cards and reconcile future charges.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '200':
+          description: The created customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listCustomers
+      tags:
+        - Customers
+      summary: List all customers
+      description: Lists customers in the account.
+      responses:
+        '200':
+          description: A list of customers.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /customers/{customer_id}:
+    parameters:
+      - $ref: '#/components/parameters/CustomerId'
+    get:
+      operationId: retrieveCustomer
+      tags:
+        - Customers
+      summary: Retrieve a customer
+      description: Retrieves a customer by id.
+      responses:
+        '200':
+          description: The requested customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateCustomer
+      tags:
+        - Customers
+      summary: Update a customer
+      description: Updates an existing customer.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerInput'
+      responses:
+        '200':
+          description: The updated customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCustomer
+      tags:
+        - Customers
+      summary: Delete a customer
+      description: Deletes a customer record.
+      responses:
+        '200':
+          description: Deletion confirmation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /tokens:
+    post:
+      operationId: createToken
+      tags:
+        - Tokens
+      summary: Create a token (card)
+      description: >-
+        Tokenizes raw card data into a single-use token id consumed by the
+        Charges or Authorize APIs. Tokens cannot be stored or reused. Variants
+        exist for encrypted cards, saved cards, Apple Pay, Samsung Pay, and
+        network tokens.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenInput'
+      responses:
+        '200':
+          description: The created token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /tokens/{token_id}:
+    parameters:
+      - name: token_id
+        in: path
+        required: true
+        description: The id of the token.
+        schema:
+          type: string
+    get:
+      operationId: retrieveToken
+      tags:
+        - Tokens
+      summary: Retrieve a token
+      description: Retrieves a token by its id.
+      responses:
+        '200':
+          description: The requested token.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /card/{customer_id}:
+    parameters:
+      - $ref: '#/components/parameters/CustomerId'
+    get:
+      operationId: listCards
+      tags:
+        - Cards
+      summary: List all cards
+      description: Lists the saved cards (card-on-file) stored against a customer.
+      responses:
+        '200':
+          description: A list of saved cards.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /card/{customer_id}/{card_id}:
+    parameters:
+      - $ref: '#/components/parameters/CustomerId'
+      - name: card_id
+        in: path
+        required: true
+        description: The id of the saved card.
+        schema:
+          type: string
+    get:
+      operationId: retrieveCard
+      tags:
+        - Cards
+      summary: Retrieve a card
+      description: Retrieves a saved card by id for a given customer.
+      responses:
+        '200':
+          description: The requested card.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteCard
+      tags:
+        - Cards
+      summary: Delete a card
+      description: Deletes a saved card from a customer.
+      responses:
+        '200':
+          description: Deletion confirmation.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /invoices:
+    post:
+      operationId: createInvoice
+      tags:
+        - Invoices
+      summary: Create an invoice
+      description: >-
+        Creates a hosted invoice that produces a payable link delivered by email
+        or SMS. Carries line items, currency, due date, and customer details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceInput'
+      responses:
+        '200':
+          description: The created invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listInvoices
+      tags:
+        - Invoices
+      summary: List all invoices
+      description: Lists invoices in the account.
+      responses:
+        '200':
+          description: A list of invoices.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /invoices/{invoice_id}:
+    parameters:
+      - name: invoice_id
+        in: path
+        required: true
+        description: The id of the invoice.
+        schema:
+          type: string
+    get:
+      operationId: retrieveInvoice
+      tags:
+        - Invoices
+      summary: Retrieve an invoice
+      description: Retrieves an invoice by id.
+      responses:
+        '200':
+          description: The requested invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: updateInvoice
+      tags:
+        - Invoices
+      summary: Update an invoice
+      description: Updates an existing invoice.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceInput'
+      responses:
+        '200':
+          description: The updated invoice.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /payouts:
+    get:
+      operationId: listPayouts
+      tags:
+        - Payouts
+      summary: List all payouts
+      description: Lists settlements (payouts) deposited to the merchant's bank account.
+      responses:
+        '200':
+          description: A list of payouts.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /payouts/{payout_id}:
+    parameters:
+      - name: payout_id
+        in: path
+        required: true
+        description: The id of the payout.
+        schema:
+          type: string
+    get:
+      operationId: retrievePayout
+      tags:
+        - Payouts
+      summary: Retrieve a payout
+      description: Retrieves a payout (settlement) by id.
+      responses:
+        '200':
+          description: The requested payout.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /businesses:
+    post:
+      operationId: createBusiness
+      tags:
+        - Business
+      summary: Create a business
+      description: Onboards a business entity for marketplace / platform settlement.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: The created business.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      operationId: listBusinesses
+      tags:
+        - Business
+      summary: List all businesses
+      description: Lists onboarded businesses.
+      responses:
+        '200':
+          description: A list of businesses.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /destinations/{destination_id}:
+    parameters:
+      - name: destination_id
+        in: path
+        required: true
+        description: The id of the settlement destination.
+        schema:
+          type: string
+    get:
+      operationId: retrieveDestination
+      tags:
+        - Business
+      summary: Retrieve a destination
+      description: Retrieves a settlement destination (bank account) that funds are paid out to.
+      responses:
+        '200':
+          description: The requested destination.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Secret API key passed as a Bearer token in the Authorization header:
+        `Authorization: Bearer sk_test_...` (test) or `sk_live_...` (live).
+        Keys are issued from the Tap dashboard. Never expose the secret key in
+        client-side code.
+  parameters:
+    ChargeId:
+      name: charge_id
+      in: path
+      required: true
+      description: The id of the charge (e.g. chg_XXXXXXXX).
+      schema:
+        type: string
+    CustomerId:
+      name: customer_id
+      in: path
+      required: true
+      description: The id of the customer (e.g. cus_XXXXXXXX).
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+    DeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        deleted:
+          type: boolean
+    Amount:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount to charge, in the currency's major unit.
+        currency:
+          type: string
+          description: ISO 4217 currency code (for example KWD, SAR, AED, BHD, EGP, USD).
+    Source:
+      type: object
+      description: >-
+        The payment source. Provide a token id, a saved card id, an authorize id
+        (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada,
+        src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
+      properties:
+        id:
+          type: string
+    Redirect:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL Tap redirects the customer to after 3D Secure authentication.
+    ChargeInput:
+      type: object
+      required:
+        - amount
+        - currency
+        - source
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+        customer_initiated:
+          type: boolean
+        threeDSecure:
+          type: boolean
+        save_card:
+          type: boolean
+        description:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+        reference:
+          type: object
+          additionalProperties: true
+        receipt:
+          type: object
+          additionalProperties: true
+        customer:
+          $ref: '#/components/schemas/CustomerInput'
+        source:
+          $ref: '#/components/schemas/Source'
+        redirect:
+          $ref: '#/components/schemas/Redirect'
+        post:
+          $ref: '#/components/schemas/Redirect'
+    Charge:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: charge
+        status:
+          type: string
+          description: For example INITIATED, IN_PROGRESS, CAPTURED, AUTHORIZED, DECLINED, VOID.
+        amount:
+          type: number
+        currency:
+          type: string
+        threeDSecure:
+          type: boolean
+        customer:
+          $ref: '#/components/schemas/Customer'
+        source:
+          $ref: '#/components/schemas/Source'
+        transaction:
+          type: object
+          additionalProperties: true
+        reference:
+          type: object
+          additionalProperties: true
+        response:
+          type: object
+          additionalProperties: true
+    ChargeList:
+      type: object
+      properties:
+        charges:
+          type: array
+          items:
+            $ref: '#/components/schemas/Charge'
+    RefundInput:
+      type: object
+      required:
+        - charge_id
+        - amount
+        - currency
+      properties:
+        charge_id:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        reason:
+          type: string
+          description: For example requested_by_customer, duplicate, fraudulent.
+        description:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: refund
+        status:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        charge_id:
+          type: string
+    CustomerInput:
+      type: object
+      properties:
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: object
+          properties:
+            country_code:
+              type: string
+            number:
+              type: string
+        description:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    Customer:
+      allOf:
+        - $ref: '#/components/schemas/CustomerInput'
+        - type: object
+          properties:
+            id:
+              type: string
+            object:
+              type: string
+              example: customer
+    TokenInput:
+      type: object
+      properties:
+        card:
+          type: object
+          properties:
+            number:
+              type: string
+            exp_month:
+              type: integer
+            exp_year:
+              type: integer
+            cvc:
+              type: string
+            name:
+              type: string
+        client_ip:
+          type: string
+    Token:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: token
+        used:
+          type: boolean
+        type:
+          type: string
+        card:
+          $ref: '#/components/schemas/Card'
+    Card:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: card
+        last_four:
+          type: string
+        brand:
+          type: string
+        exp_month:
+          type: integer
+        exp_year:
+          type: integer
+        funding:
+          type: string
+    InvoiceInput:
+      type: object
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: number
+        currency:
+          type: string
+        customer:
+          $ref: '#/components/schemas/CustomerInput'
+        order:
+          type: object
+          additionalProperties: true
+        due:
+          type: integer
+          description: Due date as a Unix timestamp (milliseconds).
+        expiry:
+          type: integer
+        description:
+          type: string
+        mode:
+          type: string
+          enum:
+            - INVOICE
+            - PAYMENT
+        notifications:
+          type: object
+          additionalProperties: true
+        currencies:
+          type: array
+          items:
+            type: string
+        charge:
+          type: object
+          additionalProperties: true
+    Invoice:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: invoice
+        status:
+          type: string
+        url:
+          type: string
+          format: uri
+        amount:
+          type: number
+        currency:
+          type: string
