@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tap Payments Authorize Charges API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Charges",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all charges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/charges"
+          },
+          "docs": "Lists charges, filterable by date, status, method, customer, and charge id."
+        },
+        {
+          "info": {
+            "name": "Create a charge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/charges",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a charge to charge a card or other payment source. The source may be a token id, a saved card, an authorize id (to capture), or a local scheme / wallet. For 3D Secure, pass redirect.url to receive the customer back after authentication."
+        },
+        {
+          "info": {
+            "name": "Retrieve a charge",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/charges/:charge_id",
+            "params": [
+              {
+                "name": "charge_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the charge (e.g. chg_XXXXXXXX)."
+              }
+            ]
+          },
+          "docs": "Retrieves the details of a charge by its id."
+        },
+        {
+          "info": {
+            "name": "Update a charge",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tap.company/v2/charges/:charge_id",
+            "params": [
+              {
+                "name": "charge_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the charge (e.g. chg_XXXXXXXX)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates mutable fields on a charge, such as description, metadata, or notifications."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

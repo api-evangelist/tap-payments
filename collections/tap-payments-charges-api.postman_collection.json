@@ -1,0 +1,800 @@
+{
+  "item": [
+    {
+      "id": "b839e76a-7241-4649-ac14-e8a359aef495",
+      "name": "Charges",
+      "description": {
+        "content": "Charge a card or other payment source.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8dff4d78-a8be-407b-877f-7256bd04eef2",
+          "name": "Create a charge",
+          "request": {
+            "name": "Create a charge",
+            "description": {
+              "content": "Initiates a charge to charge a card or other payment source. The source may be a token id, a saved card, an authorize id (to capture), or a local scheme / wallet. For 3D Secure, pass redirect.url to receive the customer back after authentication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "charges"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"customer_initiated\": \"<boolean>\",\n  \"threeDSecure\": \"<boolean>\",\n  \"save_card\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": 412.22077629755825\n  },\n  \"reference\": {\n    \"key_0\": 7151,\n    \"key_1\": \"string\"\n  },\n  \"receipt\": {\n    \"key_0\": 8567.489951674896\n  },\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": 6541\n    }\n  },\n  \"redirect\": {\n    \"url\": \"<uri>\"\n  },\n  \"post\": {\n    \"url\": \"<uri>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dec835ee-3bd0-4002-972c-81a29692df83",
+              "name": "The created charge.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"customer_initiated\": \"<boolean>\",\n  \"threeDSecure\": \"<boolean>\",\n  \"save_card\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": true,\n    \"key_1\": 3614.517829779598,\n    \"key_2\": true\n  },\n  \"reference\": {\n    \"key_0\": true\n  },\n  \"receipt\": {\n    \"key_0\": \"string\",\n    \"key_1\": 8951.06586323732\n  },\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": true,\n      \"key_1\": 737,\n      \"key_2\": 8602\n    }\n  },\n  \"redirect\": {\n    \"url\": \"<uri>\"\n  },\n  \"post\": {\n    \"url\": \"<uri>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"charge\",\n  \"status\": \"string\",\n  \"amount\": 2745.058703643173,\n  \"currency\": \"string\",\n  \"threeDSecure\": false,\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": \"string\"\n    },\n    \"id\": \"string\",\n    \"object\": \"customer\"\n  },\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"transaction\": {\n    \"key_0\": \"string\",\n    \"key_1\": false\n  },\n  \"reference\": {\n    \"key_0\": false\n  },\n  \"response\": {\n    \"key_0\": 9203,\n    \"key_1\": 4295,\n    \"key_2\": 2995.477637056639,\n    \"key_3\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b3c5cc2-23b4-4b1f-b7e0-aa14bf034085",
+              "name": "The request was malformed or failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"customer_initiated\": \"<boolean>\",\n  \"threeDSecure\": \"<boolean>\",\n  \"save_card\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": true,\n    \"key_1\": 3614.517829779598,\n    \"key_2\": true\n  },\n  \"reference\": {\n    \"key_0\": true\n  },\n  \"receipt\": {\n    \"key_0\": \"string\",\n    \"key_1\": 8951.06586323732\n  },\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": true,\n      \"key_1\": 737,\n      \"key_2\": 8602\n    }\n  },\n  \"redirect\": {\n    \"url\": \"<uri>\"\n  },\n  \"post\": {\n    \"url\": \"<uri>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd8e260e-f4ba-438c-9c47-c7564f52a897",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"customer_initiated\": \"<boolean>\",\n  \"threeDSecure\": \"<boolean>\",\n  \"save_card\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": true,\n    \"key_1\": 3614.517829779598,\n    \"key_2\": true\n  },\n  \"reference\": {\n    \"key_0\": true\n  },\n  \"receipt\": {\n    \"key_0\": \"string\",\n    \"key_1\": 8951.06586323732\n  },\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": true,\n      \"key_1\": 737,\n      \"key_2\": 8602\n    }\n  },\n  \"redirect\": {\n    \"url\": \"<uri>\"\n  },\n  \"post\": {\n    \"url\": \"<uri>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d4f83897-d9de-49d2-9dd8-cd0690486b39",
+          "name": "List all charges",
+          "request": {
+            "name": "List all charges",
+            "description": {
+              "content": "Lists charges, filterable by date, status, method, customer, and charge id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "charges"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe68c6cb-b05c-4d78-8662-87c8ab545d4f",
+              "name": "A list of charges.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"charges\": [\n    {\n      \"id\": \"string\",\n      \"object\": \"charge\",\n      \"status\": \"string\",\n      \"amount\": 3603.3404103389366,\n      \"currency\": \"string\",\n      \"threeDSecure\": true,\n      \"customer\": {\n        \"first_name\": \"<string>\",\n        \"middle_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"email\": \"<email>\",\n        \"phone\": {\n          \"country_code\": \"<string>\",\n          \"number\": \"<string>\"\n        },\n        \"description\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": true\n        },\n        \"id\": \"string\",\n        \"object\": \"customer\"\n      },\n      \"source\": {\n        \"id\": \"<string>\"\n      },\n      \"transaction\": {\n        \"key_0\": \"string\",\n        \"key_1\": 521.2346946545598,\n        \"key_2\": 5340\n      },\n      \"reference\": {\n        \"key_0\": 8470,\n        \"key_1\": 981.4619574760064,\n        \"key_2\": 5885,\n        \"key_3\": false,\n        \"key_4\": false\n      },\n      \"response\": {\n        \"key_0\": false,\n        \"key_1\": false,\n        \"key_2\": 5755.237232936948\n      }\n    },\n    {\n      \"id\": \"string\",\n      \"object\": \"charge\",\n      \"status\": \"string\",\n      \"amount\": 5165.5790455796605,\n      \"currency\": \"string\",\n      \"threeDSecure\": false,\n      \"customer\": {\n        \"first_name\": \"<string>\",\n        \"middle_name\": \"<string>\",\n        \"last_name\": \"<string>\",\n        \"email\": \"<email>\",\n        \"phone\": {\n          \"country_code\": \"<string>\",\n          \"number\": \"<string>\"\n        },\n        \"description\": \"<string>\",\n        \"metadata\": {\n          \"key_0\": 8292.812268552352,\n          \"key_1\": 3547.547388060781\n        },\n        \"id\": \"string\",\n        \"object\": \"customer\"\n      },\n      \"source\": {\n        \"id\": \"<string>\"\n      },\n      \"transaction\": {\n        \"key_0\": 3035.1488156516093,\n        \"key_1\": true\n      },\n      \"reference\": {\n        \"key_0\": 3609.7304852527514,\n        \"key_1\": \"string\"\n      },\n      \"response\": {\n        \"key_0\": 7675,\n        \"key_1\": 3087.83260458002\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3931bed8-dbe2-4cfd-8862-3d0e77e0c2a2",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f729c25b-a197-4aab-917f-6d9cb5fb8150",
+          "name": "Retrieve a charge",
+          "request": {
+            "name": "Retrieve a charge",
+            "description": {
+              "content": "Retrieves the details of a charge by its id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "charges",
+                ":charge_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "charge_id",
+                  "description": "(Required) The id of the charge (e.g. chg_XXXXXXXX)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a649d6e5-5b00-4f06-9f41-16d446e82e0a",
+              "name": "The requested charge.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges",
+                    ":charge_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "charge_id",
+                      "description": "(Required) The id of the charge (e.g. chg_XXXXXXXX)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"charge\",\n  \"status\": \"string\",\n  \"amount\": 2745.058703643173,\n  \"currency\": \"string\",\n  \"threeDSecure\": false,\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": \"string\"\n    },\n    \"id\": \"string\",\n    \"object\": \"customer\"\n  },\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"transaction\": {\n    \"key_0\": \"string\",\n    \"key_1\": false\n  },\n  \"reference\": {\n    \"key_0\": false\n  },\n  \"response\": {\n    \"key_0\": 9203,\n    \"key_1\": 4295,\n    \"key_2\": 2995.477637056639,\n    \"key_3\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "67d6b97f-3922-4d07-b62c-66f3fafceea4",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges",
+                    ":charge_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "charge_id",
+                      "description": "(Required) The id of the charge (e.g. chg_XXXXXXXX)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "100c7b5c-159c-4299-85ac-ed015fb93523",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges",
+                    ":charge_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "charge_id",
+                      "description": "(Required) The id of the charge (e.g. chg_XXXXXXXX)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0340ca26-adfb-4d28-8572-fafeb32f4741",
+          "name": "Update a charge",
+          "request": {
+            "name": "Update a charge",
+            "description": {
+              "content": "Updates mutable fields on a charge, such as description, metadata, or notifications.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "charges",
+                ":charge_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "charge_id",
+                  "description": "(Required) The id of the charge (e.g. chg_XXXXXXXX)."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": 9295\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5dc8166b-5fcb-4862-b948-fa974a35f7ec",
+              "name": "The updated charge.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges",
+                    ":charge_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "charge_id",
+                      "description": "(Required) The id of the charge (e.g. chg_XXXXXXXX)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"charge\",\n  \"status\": \"string\",\n  \"amount\": 2745.058703643173,\n  \"currency\": \"string\",\n  \"threeDSecure\": false,\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": \"string\"\n    },\n    \"id\": \"string\",\n    \"object\": \"customer\"\n  },\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"transaction\": {\n    \"key_0\": \"string\",\n    \"key_1\": false\n  },\n  \"reference\": {\n    \"key_0\": false\n  },\n  \"response\": {\n    \"key_0\": 9203,\n    \"key_1\": 4295,\n    \"key_2\": 2995.477637056639,\n    \"key_3\": false\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b45ddb77-c352-45bc-b1bc-b71119089cae",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges",
+                    ":charge_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "charge_id",
+                      "description": "(Required) The id of the charge (e.g. chg_XXXXXXXX)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99bd42dd-21e5-491b-a1b5-3649371fdab4",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charges",
+                    ":charge_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "charge_id",
+                      "description": "(Required) The id of the charge (e.g. chg_XXXXXXXX)."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tap.company/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ad3171a2-51de-4939-a5a5-ae101e040b2f",
+    "name": "Tap Payments Authorize Charges API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Tap Payments, a payment gateway and financial infrastructure provider for the Middle East and North Africa. Merchants accept online payments across the GCC and Egypt using cards (Visa, Mastercard, Amex), local schemes (mada, KNET, Benefit), and wallets (Apple Pay, Google Pay). The core flows are Charges (charge a source now), Authorize/Capture (hold then capture), Tokens (single-use tokenization of a card or wallet), Customers and Cards (vaulting for recurring / card-on-file), Refunds, Invoices, Payouts, and Business/merchant onboarding. All requests are authenticated with a secret API key passed as a Bearer token; separate test (sk_test_...) and live (sk_live_...) keys are issued from the Tap dashboard. Endpoint paths and methods are grounded in the public Tap developer reference and its published OpenAPI index (developers.tap.company/llms.txt); request and response schemas below are modeled for common fields and are not an exhaustive reproduction of Tap's object schemas - verify field-level detail against the live reference.\n\nContact Support:\n Name: Tap Payments Developers",
+      "type": "text/plain"
+    }
+  }
+}

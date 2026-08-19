@@ -1,0 +1,628 @@
+{
+  "item": [
+    {
+      "id": "321ab089-3ac1-469c-a60d-4f7fc2801cb5",
+      "name": "Authorize",
+      "description": {
+        "content": "Authorize (hold) funds for later capture.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cd361e65-d092-434b-9212-db01441e1e60",
+          "name": "Create an authorize",
+          "request": {
+            "name": "Create an authorize",
+            "description": {
+              "content": "Authorizes (holds) funds on a card without capturing. Capture later by creating a charge whose source references this authorize id. For 3D Secure, pass redirect.url.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"customer_initiated\": \"<boolean>\",\n  \"threeDSecure\": \"<boolean>\",\n  \"save_card\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  },\n  \"reference\": {\n    \"key_0\": true,\n    \"key_1\": 729.1729090031985\n  },\n  \"receipt\": {\n    \"key_0\": \"string\",\n    \"key_1\": 5724\n  },\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": 4216,\n      \"key_2\": 221.26544216059418\n    }\n  },\n  \"redirect\": {\n    \"url\": \"<uri>\"\n  },\n  \"post\": {\n    \"url\": \"<uri>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7c7bae98-79c3-4530-8639-98ce31d51d42",
+              "name": "The created authorize.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"customer_initiated\": \"<boolean>\",\n  \"threeDSecure\": \"<boolean>\",\n  \"save_card\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": 1922.460209175063,\n    \"key_1\": 864\n  },\n  \"reference\": {\n    \"key_0\": true,\n    \"key_1\": 3915\n  },\n  \"receipt\": {\n    \"key_0\": \"string\"\n  },\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": 7.076852194199956\n    }\n  },\n  \"redirect\": {\n    \"url\": \"<uri>\"\n  },\n  \"post\": {\n    \"url\": \"<uri>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"charge\",\n  \"status\": \"string\",\n  \"amount\": 2701.8955418055657,\n  \"currency\": \"string\",\n  \"threeDSecure\": false,\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": 3238,\n      \"key_1\": true\n    },\n    \"id\": \"string\",\n    \"object\": \"customer\"\n  },\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"transaction\": {\n    \"key_0\": 7600\n  },\n  \"reference\": {\n    \"key_0\": 9862\n  },\n  \"response\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "094ac89e-52c8-43b7-a424-1a70aef4b306",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"customer_initiated\": \"<boolean>\",\n  \"threeDSecure\": \"<boolean>\",\n  \"save_card\": \"<boolean>\",\n  \"description\": \"<string>\",\n  \"metadata\": {\n    \"key_0\": 1922.460209175063,\n    \"key_1\": 864\n  },\n  \"reference\": {\n    \"key_0\": true,\n    \"key_1\": 3915\n  },\n  \"receipt\": {\n    \"key_0\": \"string\"\n  },\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": 7.076852194199956\n    }\n  },\n  \"redirect\": {\n    \"url\": \"<uri>\"\n  },\n  \"post\": {\n    \"url\": \"<uri>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8cc660d9-17a6-442e-a5bc-b9fc94ea2cbd",
+          "name": "Retrieve an authorize",
+          "request": {
+            "name": "Retrieve an authorize",
+            "description": {
+              "content": "Retrieves an authorize object by its id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorize",
+                ":authorize_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "authorize_id",
+                  "description": "(Required) The id of the authorize object."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d41f49f8-f4f0-425f-a426-0a64c47da8cb",
+              "name": "The requested authorize.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":authorize_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorize_id",
+                      "description": "(Required) The id of the authorize object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"charge\",\n  \"status\": \"string\",\n  \"amount\": 2701.8955418055657,\n  \"currency\": \"string\",\n  \"threeDSecure\": false,\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": 3238,\n      \"key_1\": true\n    },\n    \"id\": \"string\",\n    \"object\": \"customer\"\n  },\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"transaction\": {\n    \"key_0\": 7600\n  },\n  \"reference\": {\n    \"key_0\": 9862\n  },\n  \"response\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e16cbdb6-932a-42a8-85dd-fbc6f079971d",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":authorize_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorize_id",
+                      "description": "(Required) The id of the authorize object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19c72c39-a2e5-444d-af9d-28db506affbf",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":authorize_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorize_id",
+                      "description": "(Required) The id of the authorize object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dea69f9a-a6a7-443b-a2e4-a7e2a55c1fd6",
+          "name": "Update an authorize",
+          "request": {
+            "name": "Update an authorize",
+            "description": {
+              "content": "Updates an authorize object (for example to void it or adjust metadata).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorize",
+                ":authorize_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "authorize_id",
+                  "description": "(Required) The id of the authorize object."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"key_0\": 8544,\n  \"key_1\": 8731.983267080423,\n  \"key_2\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "217bce3a-33bc-412f-a18f-4b94c50cdf94",
+              "name": "The updated authorize.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":authorize_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorize_id",
+                      "description": "(Required) The id of the authorize object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": 8265.526900397745,\n  \"key_1\": 2801\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"object\": \"charge\",\n  \"status\": \"string\",\n  \"amount\": 2701.8955418055657,\n  \"currency\": \"string\",\n  \"threeDSecure\": false,\n  \"customer\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\",\n    \"email\": \"<email>\",\n    \"phone\": {\n      \"country_code\": \"<string>\",\n      \"number\": \"<string>\"\n    },\n    \"description\": \"<string>\",\n    \"metadata\": {\n      \"key_0\": 3238,\n      \"key_1\": true\n    },\n    \"id\": \"string\",\n    \"object\": \"customer\"\n  },\n  \"source\": {\n    \"id\": \"<string>\"\n  },\n  \"transaction\": {\n    \"key_0\": 7600\n  },\n  \"reference\": {\n    \"key_0\": 9862\n  },\n  \"response\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f97634e-1a8c-4d83-9952-41f209eaa8f8",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":authorize_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorize_id",
+                      "description": "(Required) The id of the authorize object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": 8265.526900397745,\n  \"key_1\": 2801\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d89f2ed-135a-456c-b39c-4a491634e3ed",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":authorize_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "authorize_id",
+                      "description": "(Required) The id of the authorize object."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"key_0\": 8265.526900397745,\n  \"key_1\": 2801\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"errors\": [\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    },\n    {\n      \"code\": \"string\",\n      \"description\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tap.company/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ddb3ac87-2190-493f-8307-d9c3cf0c1c93",
+    "name": "Tap Payments Authorize API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Tap Payments, a payment gateway and financial infrastructure provider for the Middle East and North Africa. Merchants accept online payments across the GCC and Egypt using cards (Visa, Mastercard, Amex), local schemes (mada, KNET, Benefit), and wallets (Apple Pay, Google Pay). The core flows are Charges (charge a source now), Authorize/Capture (hold then capture), Tokens (single-use tokenization of a card or wallet), Customers and Cards (vaulting for recurring / card-on-file), Refunds, Invoices, Payouts, and Business/merchant onboarding. All requests are authenticated with a secret API key passed as a Bearer token; separate test (sk_test_...) and live (sk_live_...) keys are issued from the Tap dashboard. Endpoint paths and methods are grounded in the public Tap developer reference and its published OpenAPI index (developers.tap.company/llms.txt); request and response schemas below are modeled for common fields and are not an exhaustive reproduction of Tap's object schemas - verify field-level detail against the live reference.\n\nContact Support:\n Name: Tap Payments Developers",
+      "type": "text/plain"
+    }
+  }
+}

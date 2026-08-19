@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tap Payments Authorize Business API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Business",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all businesses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/businesses"
+          },
+          "docs": "Lists onboarded businesses."
+        },
+        {
+          "info": {
+            "name": "Create a business",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/businesses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Onboards a business entity for marketplace / platform settlement."
+        },
+        {
+          "info": {
+            "name": "Retrieve a destination",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/destinations/:destination_id",
+            "params": [
+              {
+                "name": "destination_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the settlement destination."
+              }
+            ]
+          },
+          "docs": "Retrieves a settlement destination (bank account) that funds are paid out to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

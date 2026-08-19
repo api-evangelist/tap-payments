@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tap Payments Authorize API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorize",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create an authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/authorize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authorizes (holds) funds on a card without capturing. Capture later by creating a charge whose source references this authorize id. For 3D Secure, pass redirect.url."
+        },
+        {
+          "info": {
+            "name": "Retrieve an authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/authorize/:authorize_id",
+            "params": [
+              {
+                "name": "authorize_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the authorize object."
+              }
+            ]
+          },
+          "docs": "Retrieves an authorize object by its id."
+        },
+        {
+          "info": {
+            "name": "Update an authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.tap.company/v2/authorize/:authorize_id",
+            "params": [
+              {
+                "name": "authorize_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the authorize object."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an authorize object (for example to void it or adjust metadata)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

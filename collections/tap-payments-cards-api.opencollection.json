@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tap Payments Authorize Cards API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all cards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/card/:customer_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the customer (e.g. cus_XXXXXXXX)."
+              }
+            ]
+          },
+          "docs": "Lists the saved cards (card-on-file) stored against a customer."
+        },
+        {
+          "info": {
+            "name": "Retrieve a card",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/card/:customer_id/:card_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the customer (e.g. cus_XXXXXXXX)."
+              },
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the saved card."
+              }
+            ]
+          },
+          "docs": "Retrieves a saved card by id for a given customer."
+        },
+        {
+          "info": {
+            "name": "Delete a card",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.tap.company/v2/card/:customer_id/:card_id",
+            "params": [
+              {
+                "name": "customer_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the customer (e.g. cus_XXXXXXXX)."
+              },
+              {
+                "name": "card_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the saved card."
+              }
+            ]
+          },
+          "docs": "Deletes a saved card from a customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

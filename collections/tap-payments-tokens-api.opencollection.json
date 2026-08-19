@@ -1,0 +1,58 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tap Payments Authorize Tokens API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a token (card)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tap.company/v2/tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Tokenizes raw card data into a single-use token id consumed by the Charges or Authorize APIs. Tokens cannot be stored or reused. Variants exist for encrypted cards, saved cards, Apple Pay, Samsung Pay, and network tokens."
+        },
+        {
+          "info": {
+            "name": "Retrieve a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/tokens/:token_id",
+            "params": [
+              {
+                "name": "token_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the token."
+              }
+            ]
+          },
+          "docs": "Retrieves a token by its id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

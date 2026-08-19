@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tap Payments Authorize Payouts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payouts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all payouts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/payouts"
+          },
+          "docs": "Lists settlements (payouts) deposited to the merchant's bank account."
+        },
+        {
+          "info": {
+            "name": "Retrieve a payout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tap.company/v2/payouts/:payout_id",
+            "params": [
+              {
+                "name": "payout_id",
+                "value": "",
+                "type": "path",
+                "description": "The id of the payout."
+              }
+            ]
+          },
+          "docs": "Retrieves a payout (settlement) by id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
