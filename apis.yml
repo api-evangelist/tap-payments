@@ -43,6 +43,10 @@ apis:
 - aid: tap-payments:tap-payments-webhooks
   name: Tap Payments Webhooks
   tags:
+  - Webhook
+  - Event
+  - Notification
+  tags_raw:
   - Webhooks
   - Events
   - Notifications
