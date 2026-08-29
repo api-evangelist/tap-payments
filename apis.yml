@@ -10,6 +10,18 @@ description: Tap Payments is a payment gateway and financial infrastructure prov
   Tokens for saved cards, Customers, Refunds, Invoices, Payouts, and merchant
   onboarding via the Business API. Authentication is a secret API key passed as a
   Bearer token, with separate test and live keys issued from the Tap dashboard.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
