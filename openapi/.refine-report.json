@@ -1,15 +1,7 @@
 {
   "provider": "tap-payments",
   "sources": [
-    "tap-payments-authorize-api-openapi.yml",
-    "tap-payments-business-api-openapi.yml",
-    "tap-payments-cards-api-openapi.yml",
-    "tap-payments-charges-api-openapi.yml",
-    "tap-payments-customers-api-openapi.yml",
-    "tap-payments-invoices-api-openapi.yml",
-    "tap-payments-payouts-api-openapi.yml",
-    "tap-payments-refunds-api-openapi.yml",
-    "tap-payments-tokens-api-openapi.yml"
+    "_original/tap-payments-openapi.yml"
   ],
   "outputs": [
     "tap-payments-authorize-api-openapi.yml",
@@ -25,6 +17,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "tap-payments-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "tap-payments-authorize-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tap-payments-business-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tap-payments-cards-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tap-payments-charges-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tap-payments-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tap-payments-invoices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tap-payments-payouts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tap-payments-refunds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "tap-payments-tokens-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

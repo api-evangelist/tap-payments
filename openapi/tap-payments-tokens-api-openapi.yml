@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Tap Payments Authorize Tokens API
-  description: REST API for Tap Payments, a payment gateway and financial infrastructure provider for the Middle East and North Africa. Merchants accept online payments across the GCC and Egypt using cards (Visa, Mastercard, Amex), local schemes (mada, KNET, Benefit), and wallets (Apple Pay, Google Pay). The core flows are Charges (charge a source now), Authorize/Capture (hold then capture), Tokens (single-use tokenization of a card or wallet), Customers and Cards (vaulting for recurring / card-on-file), Refunds, Invoices, Payouts, and Business/merchant onboarding. All requests are authenticated with a secret API key passed as a Bearer token; separate test (sk_test_...) and live (sk_live_...) keys are issued from the Tap dashboard. Endpoint paths and methods are grounded in the public Tap developer reference and its published OpenAPI index (developers.tap.company/llms.txt); request and response schemas below are modeled for common fields and are not an exhaustive reproduction of Tap's object schemas - verify field-level detail against the live reference.
+  title: Tap Payments Tokens API
+  description: REST API for Tap Payments, a payment gateway and financial infrastructure provider for the Middle East and North Africa.
   version: '1.0'
   contact:
     name: Tap Payments Developers
@@ -64,52 +64,19 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    TokenInput:
+    Error:
       type: object
       properties:
-        card:
-          type: object
-          properties:
-            number:
-              type: string
-            exp_month:
-              type: integer
-            exp_year:
-              type: integer
-            cvc:
-              type: string
-            name:
-              type: string
-        client_ip:
-          type: string
-    Token:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          example: token
-        used:
-          type: boolean
-        type:
-          type: string
-        card:
-          $ref: '#/components/schemas/Card'
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     Card:
       type: object
       properties:
@@ -128,18 +95,51 @@ components:
           type: integer
         funding:
           type: string
-    Error:
+    Token:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
+        id:
+          type: string
+        object:
+          type: string
+          example: token
+        used:
+          type: boolean
+        type:
+          type: string
+        card:
+          $ref: '#/components/schemas/Card'
+    TokenInput:
+      type: object
+      properties:
+        card:
+          type: object
+          properties:
+            number:
+              type: string
+            exp_month:
+              type: integer
+            exp_year:
+              type: integer
+            cvc:
+              type: string
+            name:
+              type: string
+        client_ip:
+          type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

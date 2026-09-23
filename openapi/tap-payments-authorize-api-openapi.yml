@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Tap Payments Authorize API
-  description: REST API for Tap Payments, a payment gateway and financial infrastructure provider for the Middle East and North Africa. Merchants accept online payments across the GCC and Egypt using cards (Visa, Mastercard, Amex), local schemes (mada, KNET, Benefit), and wallets (Apple Pay, Google Pay). The core flows are Charges (charge a source now), Authorize/Capture (hold then capture), Tokens (single-use tokenization of a card or wallet), Customers and Cards (vaulting for recurring / card-on-file), Refunds, Invoices, Payouts, and Business/merchant onboarding. All requests are authenticated with a secret API key passed as a Bearer token; separate test (sk_test_...) and live (sk_live_...) keys are issued from the Tap dashboard. Endpoint paths and methods are grounded in the public Tap developer reference and its published OpenAPI index (developers.tap.company/llms.txt); request and response schemas below are modeled for common fields and are not an exhaustive reproduction of Tap's object schemas - verify field-level detail against the live reference.
+  description: REST API for Tap Payments, a payment gateway and financial infrastructure provider for the Middle East and North Africa.
   version: '1.0'
   contact:
     name: Tap Payments Developers
@@ -88,66 +88,19 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Source:
-      type: object
-      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
-      properties:
-        id:
-          type: string
-    Customer:
-      allOf:
-      - $ref: '#/components/schemas/CustomerInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          object:
-            type: string
-            example: customer
-    Charge:
+    Error:
       type: object
       properties:
-        id:
-          type: string
-        object:
-          type: string
-          example: charge
-        status:
-          type: string
-          description: For example INITIATED, IN_PROGRESS, CAPTURED, AUTHORIZED, DECLINED, VOID.
-        amount:
-          type: number
-        currency:
-          type: string
-        threeDSecure:
-          type: boolean
-        customer:
-          $ref: '#/components/schemas/Customer'
-        source:
-          $ref: '#/components/schemas/Source'
-        transaction:
-          type: object
-          additionalProperties: true
-        reference:
-          type: object
-          additionalProperties: true
-        response:
-          type: object
-          additionalProperties: true
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     CustomerInput:
       type: object
       properties:
@@ -208,6 +161,52 @@ components:
           $ref: '#/components/schemas/Redirect'
         post:
           $ref: '#/components/schemas/Redirect'
+    Charge:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: charge
+        status:
+          type: string
+          description: For example INITIATED, IN_PROGRESS, CAPTURED, AUTHORIZED, DECLINED, VOID.
+        amount:
+          type: number
+        currency:
+          type: string
+        threeDSecure:
+          type: boolean
+        customer:
+          $ref: '#/components/schemas/Customer'
+        source:
+          $ref: '#/components/schemas/Source'
+        transaction:
+          type: object
+          additionalProperties: true
+        reference:
+          type: object
+          additionalProperties: true
+        response:
+          type: object
+          additionalProperties: true
+    Source:
+      type: object
+      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
+      properties:
+        id:
+          type: string
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          object:
+            type: string
+            example: customer
     Redirect:
       type: object
       properties:
@@ -215,18 +214,19 @@ components:
           type: string
           format: uri
           description: URL Tap redirects the customer to after 3D Secure authentication.
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
