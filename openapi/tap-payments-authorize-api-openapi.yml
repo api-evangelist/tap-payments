@@ -88,19 +88,20 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
     CustomerInput:
       type: object
       properties:
@@ -161,6 +162,19 @@ components:
           $ref: '#/components/schemas/Redirect'
         post:
           $ref: '#/components/schemas/Redirect'
+    Redirect:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL Tap redirects the customer to after 3D Secure authentication.
+    Source:
+      type: object
+      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
+      properties:
+        id:
+          type: string
     Charge:
       type: object
       properties:
@@ -191,12 +205,18 @@ components:
         response:
           type: object
           additionalProperties: true
-    Source:
+    Error:
       type: object
-      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
       properties:
-        id:
-          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     Customer:
       allOf:
       - $ref: '#/components/schemas/CustomerInput'
@@ -207,26 +227,6 @@ components:
           object:
             type: string
             example: customer
-    Redirect:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: URL Tap redirects the customer to after 3D Secure authentication.
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

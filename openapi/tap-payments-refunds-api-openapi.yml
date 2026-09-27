@@ -81,34 +81,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
-    Refund:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          example: refund
-        status:
-          type: string
-        amount:
-          type: number
-        currency:
-          type: string
-        charge_id:
-          type: string
     RefundInput:
       type: object
       required:
@@ -130,6 +102,34 @@ components:
         metadata:
           type: object
           additionalProperties: true
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: refund
+        status:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        charge_id:
+          type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
   responses:
     NotFound:
       description: The requested resource was not found.

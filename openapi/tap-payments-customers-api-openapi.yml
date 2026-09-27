@@ -115,19 +115,29 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    DeleteResponse:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
+        id:
+          type: string
+        object:
+          type: string
+        deleted:
+          type: boolean
     CustomerInput:
       type: object
       properties:
@@ -152,15 +162,18 @@ components:
         metadata:
           type: object
           additionalProperties: true
-    DeleteResponse:
+    Error:
       type: object
       properties:
-        id:
-          type: string
-        object:
-          type: string
-        deleted:
-          type: boolean
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     Customer:
       allOf:
       - $ref: '#/components/schemas/CustomerInput'
@@ -179,19 +192,6 @@ components:
       description: The id of the customer (e.g. cus_XXXXXXXX).
       schema:
         type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

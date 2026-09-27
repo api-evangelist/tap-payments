@@ -100,19 +100,33 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
+    ChargeList:
       type: object
       properties:
-        errors:
+        charges:
           type: array
           items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
+            $ref: '#/components/schemas/Charge'
     CustomerInput:
       type: object
       properties:
@@ -173,6 +187,19 @@ components:
           $ref: '#/components/schemas/Redirect'
         post:
           $ref: '#/components/schemas/Redirect'
+    Source:
+      type: object
+      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
+      properties:
+        id:
+          type: string
+    Redirect:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL Tap redirects the customer to after 3D Secure authentication.
     Charge:
       type: object
       properties:
@@ -203,19 +230,18 @@ components:
         response:
           type: object
           additionalProperties: true
-    Source:
-      type: object
-      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
-      properties:
-        id:
-          type: string
-    ChargeList:
+    Error:
       type: object
       properties:
-        charges:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/Charge'
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     Customer:
       allOf:
       - $ref: '#/components/schemas/CustomerInput'
@@ -226,13 +252,6 @@ components:
           object:
             type: string
             example: customer
-    Redirect:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: URL Tap redirects the customer to after 3D Secure authentication.
   parameters:
     ChargeId:
       name: charge_id
@@ -241,25 +260,6 @@ components:
       description: The id of the charge (e.g. chg_XXXXXXXX).
       schema:
         type: string
-  responses:
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
