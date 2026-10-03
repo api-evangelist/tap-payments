@@ -102,30 +102,16 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    CustomerInput:
-      type: object
-      properties:
-        first_name:
-          type: string
-        middle_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: object
-          properties:
-            country_code:
-              type: string
-            number:
-              type: string
-        description:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          object:
+            type: string
+            example: customer
     ChargeInput:
       type: object
       required:
@@ -169,6 +155,18 @@ components:
           type: string
           format: uri
           description: URL Tap redirects the customer to after 3D Secure authentication.
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     Source:
       type: object
       description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
@@ -205,28 +203,30 @@ components:
         response:
           type: object
           additionalProperties: true
-    Error:
+    CustomerInput:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
-    Customer:
-      allOf:
-      - $ref: '#/components/schemas/CustomerInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          object:
-            type: string
-            example: customer
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: object
+          properties:
+            country_code:
+              type: string
+            number:
+              type: string
+        description:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

@@ -117,30 +117,18 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    CustomerInput:
+    Error:
       type: object
       properties:
-        first_name:
-          type: string
-        middle_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: object
-          properties:
-            country_code:
-              type: string
-            number:
-              type: string
-        description:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     InvoiceInput:
       type: object
       required:
@@ -195,18 +183,30 @@ components:
           type: number
         currency:
           type: string
-    Error:
+    CustomerInput:
       type: object
       properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: object
+          properties:
+            country_code:
+              type: string
+            number:
+              type: string
+        description:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

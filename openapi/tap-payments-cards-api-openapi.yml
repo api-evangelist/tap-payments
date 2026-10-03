@@ -92,6 +92,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    CustomerId:
+      name: customer_id
+      in: path
+      required: true
+      description: The id of the customer (e.g. cus_XXXXXXXX).
+      schema:
+        type: string
   schemas:
     DeleteResponse:
       type: object
@@ -132,14 +140,6 @@ components:
                 type: string
               description:
                 type: string
-  parameters:
-    CustomerId:
-      name: customer_id
-      in: path
-      required: true
-      description: The id of the customer (e.g. cus_XXXXXXXX).
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

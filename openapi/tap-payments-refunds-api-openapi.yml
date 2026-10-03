@@ -80,6 +80,19 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     RefundInput:
       type: object
@@ -102,6 +115,18 @@ components:
         metadata:
           type: object
           additionalProperties: true
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     Refund:
       type: object
       properties:
@@ -118,31 +143,6 @@ components:
           type: string
         charge_id:
           type: string
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

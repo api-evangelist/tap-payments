@@ -101,14 +101,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    BadRequest:
+      description: The request was malformed or failed validation.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was malformed or failed validation.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
@@ -119,38 +119,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    ChargeId:
+      name: charge_id
+      in: path
+      required: true
+      description: The id of the charge (e.g. chg_XXXXXXXX).
+      schema:
+        type: string
   schemas:
-    ChargeList:
-      type: object
-      properties:
-        charges:
-          type: array
-          items:
-            $ref: '#/components/schemas/Charge'
-    CustomerInput:
-      type: object
-      properties:
-        first_name:
-          type: string
-        middle_name:
-          type: string
-        last_name:
-          type: string
-        email:
-          type: string
-          format: email
-        phone:
-          type: object
-          properties:
-            country_code:
-              type: string
-            number:
-              type: string
-        description:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          object:
+            type: string
+            example: customer
     ChargeInput:
       type: object
       required:
@@ -187,12 +174,6 @@ components:
           $ref: '#/components/schemas/Redirect'
         post:
           $ref: '#/components/schemas/Redirect'
-    Source:
-      type: object
-      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
-      properties:
-        id:
-          type: string
     Redirect:
       type: object
       properties:
@@ -200,6 +181,24 @@ components:
           type: string
           format: uri
           description: URL Tap redirects the customer to after 3D Secure authentication.
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+    Source:
+      type: object
+      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
+      properties:
+        id:
+          type: string
     Charge:
       type: object
       properties:
@@ -230,36 +229,37 @@ components:
         response:
           type: object
           additionalProperties: true
-    Error:
+    CustomerInput:
       type: object
       properties:
-        errors:
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: object
+          properties:
+            country_code:
+              type: string
+            number:
+              type: string
+        description:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
+    ChargeList:
+      type: object
+      properties:
+        charges:
           type: array
           items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
-    Customer:
-      allOf:
-      - $ref: '#/components/schemas/CustomerInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          object:
-            type: string
-            example: customer
-  parameters:
-    ChargeId:
-      name: charge_id
-      in: path
-      required: true
-      description: The id of the charge (e.g. chg_XXXXXXXX).
-      schema:
-        type: string
+            $ref: '#/components/schemas/Charge'
   securitySchemes:
     bearerAuth:
       type: http

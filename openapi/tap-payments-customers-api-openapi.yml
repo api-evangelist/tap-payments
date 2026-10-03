@@ -128,7 +128,25 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    CustomerId:
+      name: customer_id
+      in: path
+      required: true
+      description: The id of the customer (e.g. cus_XXXXXXXX).
+      schema:
+        type: string
   schemas:
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          object:
+            type: string
+            example: customer
     DeleteResponse:
       type: object
       properties:
@@ -138,6 +156,18 @@ components:
           type: string
         deleted:
           type: boolean
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     CustomerInput:
       type: object
       properties:
@@ -162,36 +192,6 @@ components:
         metadata:
           type: object
           additionalProperties: true
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
-    Customer:
-      allOf:
-      - $ref: '#/components/schemas/CustomerInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          object:
-            type: string
-            example: customer
-  parameters:
-    CustomerId:
-      name: customer_id
-      in: path
-      required: true
-      description: The id of the customer (e.g. cus_XXXXXXXX).
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http
