@@ -88,30 +88,37 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
-    Customer:
-      allOf:
-      - $ref: '#/components/schemas/CustomerInput'
-      - type: object
-        properties:
-          id:
-            type: string
-          object:
-            type: string
-            example: customer
+    Charge:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+          example: charge
+        status:
+          type: string
+          description: For example INITIATED, IN_PROGRESS, CAPTURED, AUTHORIZED, DECLINED, VOID.
+        amount:
+          type: number
+        currency:
+          type: string
+        threeDSecure:
+          type: boolean
+        customer:
+          $ref: '#/components/schemas/Customer'
+        source:
+          $ref: '#/components/schemas/Source'
+        transaction:
+          type: object
+          additionalProperties: true
+        reference:
+          type: object
+          additionalProperties: true
+        response:
+          type: object
+          additionalProperties: true
     ChargeInput:
       type: object
       required:
@@ -148,61 +155,6 @@ components:
           $ref: '#/components/schemas/Redirect'
         post:
           $ref: '#/components/schemas/Redirect'
-    Redirect:
-      type: object
-      properties:
-        url:
-          type: string
-          format: uri
-          description: URL Tap redirects the customer to after 3D Secure authentication.
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
-    Source:
-      type: object
-      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
-      properties:
-        id:
-          type: string
-    Charge:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-          example: charge
-        status:
-          type: string
-          description: For example INITIATED, IN_PROGRESS, CAPTURED, AUTHORIZED, DECLINED, VOID.
-        amount:
-          type: number
-        currency:
-          type: string
-        threeDSecure:
-          type: boolean
-        customer:
-          $ref: '#/components/schemas/Customer'
-        source:
-          $ref: '#/components/schemas/Source'
-        transaction:
-          type: object
-          additionalProperties: true
-        reference:
-          type: object
-          additionalProperties: true
-        response:
-          type: object
-          additionalProperties: true
     CustomerInput:
       type: object
       properties:
@@ -227,6 +179,54 @@ components:
         metadata:
           type: object
           additionalProperties: true
+    Redirect:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL Tap redirects the customer to after 3D Secure authentication.
+    Source:
+      type: object
+      description: The payment source. Provide a token id, a saved card id, an authorize id (to capture), or a scheme identifier such as src_kw.knet, src_sa.mada, src_bh.benefit, src_card, src_apple_pay, or src_google_pay.
+      properties:
+        id:
+          type: string
+    Customer:
+      allOf:
+      - $ref: '#/components/schemas/CustomerInput'
+      - type: object
+        properties:
+          id:
+            type: string
+          object:
+            type: string
+            example: customer
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
