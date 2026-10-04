@@ -343,6 +343,9 @@ apis:
   - type: APIReference
     url: https://developers.tap.company/reference/create-a-business
 common:
+- type: CapabilityMap
+  url: capabilities/tap-payments-capability-edges.yml
+  name: Tap Payments Business Capability Map
 - type: AgenticAccess
   url: agentic-access/tap-payments-agentic-access.yml
 - type: DomainSecurity
