@@ -49,7 +49,7 @@ tags:
 - mada
 - Financial Infrastructure
 created: '2026-07-12'
-modified: '2026-07-12'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: tap-payments:tap-payments-webhooks
@@ -343,6 +343,8 @@ apis:
   - type: APIReference
     url: https://developers.tap.company/reference/create-a-business
 common:
+- url: https://blog.tap.company/rss/
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/tap-payments-capability-edges.yml
   name: Tap Payments Business Capability Map
