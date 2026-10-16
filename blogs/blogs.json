@@ -1,0 +1,14 @@
+{
+  "repo": "tap-payments",
+  "feeds": [
+    {
+      "source": "https://blog.tap.company/rss/",
+      "feed_url": "https://blog.tap.company/rss/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-10-10T13:15:00Z"
+}
