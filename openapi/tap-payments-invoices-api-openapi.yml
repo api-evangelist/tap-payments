@@ -104,6 +104,18 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
     InvoiceInput:
       type: object
       required:
@@ -182,18 +194,6 @@ components:
           type: number
         currency:
           type: string
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
   responses:
     NotFound:
       description: The requested resource was not found.

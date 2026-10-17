@@ -79,15 +79,28 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    CustomerId:
-      name: customer_id
-      in: path
-      required: true
-      description: The id of the customer (e.g. cus_XXXXXXXX).
-      schema:
-        type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              code:
+                type: string
+              description:
+                type: string
+    DeleteResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        object:
+          type: string
+        deleted:
+          type: boolean
     Card:
       type: object
       properties:
@@ -106,27 +119,14 @@ components:
           type: integer
         funding:
           type: string
-    DeleteResponse:
-      type: object
-      properties:
-        id:
-          type: string
-        object:
-          type: string
-        deleted:
-          type: boolean
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: object
-            properties:
-              code:
-                type: string
-              description:
-                type: string
+  parameters:
+    CustomerId:
+      name: customer_id
+      in: path
+      required: true
+      description: The id of the customer (e.g. cus_XXXXXXXX).
+      schema:
+        type: string
   responses:
     NotFound:
       description: The requested resource was not found.
