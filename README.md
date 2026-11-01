@@ -1,4 +1,4 @@
-# Tap Payments (tap-payments)
+# Tap Payments
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,247 +64,134 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Tap Payments is a payment gateway and financial infrastructure provider for the Middle East and North Africa (MENA). Its REST API lets merchants accept online payments across the GCC and Egypt - cards (Visa, Mastercard, Amex), local schemes (mada in Saudi Arabia, KNET in Kuwait, Benefit in Bahrain), and wallets (Apple Pay, Google Pay) - through Charges and Authorize/Capture flows, with Tokens for saved cards, plus Customers, Cards, Refunds, Invoices, Payouts, and merchant onboarding via the Business API.
+Tap Payments is a payment gateway and financial infrastructure provider for the Middle East and North Africa (MENA). Its REST API lets merchants accept online payments across the GCC and Egypt - cards (Visa, Mastercard, Amex), local schemes (mada in Saudi Arabia, KNET in Kuwait, Benefit in Bahrain), and wallets (Apple Pay, Google Pay) - through Charges and Authorize/Capture flows, with Tokens for saved cards, Customers, Refunds, Invoices, Payouts, and merchant onboarding via the Business API. Authentication is a secret API key passed as a Bearer token, with separate test and live keys issued from the Tap dashboard.
 
-## Access Model (read this first)
+**Areas:** Payments · Fintech · Payment Gateway · MENA · Middle East · Online Payments · Charges · Cards · KNET · mada · Financial Infrastructure
 
-- **Self-serve, key-based.** Sign up on the [Tap dashboard](https://www.tap.company), get API keys, and start integrating. No formal API application/partner gate is required to reach the developer docs or test mode.
-- **Test and live keys are separate.** Each mode has its own secret key generated in the dashboard. Test keys are prefixed `sk_test_`; live keys are prefixed `sk_live_`. There are also publishable keys (`pk_test_` / `pk_live_`) for client-side tokenization.
-- **Authentication is a secret API key sent as a Bearer token:** `Authorization: Bearer sk_test_XXXXXXXX`. The secret key must stay server-side.
-- **Live processing requires an approved, KYC'd merchant account** in a supported market. You can build and test fully in test mode before that approval; going live and receiving payouts requires business verification.
-- **Regional footprint:** GCC (Kuwait, Saudi Arabia, UAE, Bahrain, Qatar, Oman) plus Egypt, with a single integration across markets.
+## Tap Payments on APIs.io
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/tap-payments/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/tap-payments/refs/heads/main/apis.yml)
+Everything profiled for Tap Payments is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/tap-payments/](https://apis.io/providers/tap-payments/)** — or go straight to one of the APIs or properties below.
 
-**Base URL:** `https://api.tap.company/v2`
+### APIs (10)
 
-## Tags
+- [Tap Payments Webhooks](https://apis.io/apis/tap-payments/tap-payments-webhooks/) — Server-to-server HTTP POST callbacks (Instant Payment Notification) that Tap sends to your configured endpoint when a charge, authorize, invoice, or…
+- [Tap Payments Authorize API](https://apis.io/apis/tap-payments/tap-payments-authorize-api/) — Authorize (hold) funds for later capture.
+- [Tap Payments Business API](https://apis.io/apis/tap-payments/tap-payments-business-api/) — Business, merchant, and destination onboarding.
+- [Tap Payments Cards API](https://apis.io/apis/tap-payments/tap-payments-cards-api/) — Saved cards (card-on-file) attached to a customer.
+- [Tap Payments Charges API](https://apis.io/apis/tap-payments/tap-payments-charges-api/) — Charge a card or other payment source.
+- [Tap Payments Customers API](https://apis.io/apis/tap-payments/tap-payments-customers-api/) — Customer records for vaulting and recurring payments.
+- [Tap Payments Invoices API](https://apis.io/apis/tap-payments/tap-payments-invoices-api/) — Hosted, payable invoices.
+- [Tap Payments Payouts API](https://apis.io/apis/tap-payments/tap-payments-payouts-api/) — Settlements paid out to the merchant.
+- [Tap Payments Refunds API](https://apis.io/apis/tap-payments/tap-payments-refunds-api/) — Refund a captured charge.
+- [Tap Payments Tokens API](https://apis.io/apis/tap-payments/tap-payments-tokens-api/) — Single-use tokenization of cards and wallets.
 
-- Payments
-- Fintech
-- Payment Gateway
-- MENA
-- Middle East
-- Online Payments
-- Charges
-- Cards
-- KNET
-- mada
-- Financial Infrastructure
+### Published properties
 
-## Timestamps
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-- **Created:** 2026-07-12
-- **Modified:** 2026-07-12
+#### Agentic access (1)
 
-## APIs
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Tap Payments Charges API
+- [Tap Payments Agentic Access](https://apis.io/agentic-access/tap-payments/tap-payments-agentic-access/)
 
-Create, retrieve, update, and list charges to charge a card or other payment source. Supports 3D Secure redirect flows, saved-card tokens, local schemes (mada, KNET, Benefit), and wallets. A charge references a source (token or authorize id) and a customer.
+#### Collections (10)
 
-- **Human URL:** [https://developers.tap.company/reference/create-a-charge](https://developers.tap.company/reference/create-a-charge)
-- **Base URL:** `https://api.tap.company/v2`
+Postman and Open Collection request collections.
 
-#### Tags
+- [Tap Payments API](https://apis.io/collections/tap-payments/open-tap-payments/)
+- [Tap Payments Authorize API](https://apis.io/collections/tap-payments/open-tap-payments-authorize-api/)
+- [Tap Payments Authorize Business API](https://apis.io/collections/tap-payments/open-tap-payments-business-api/)
+- [Tap Payments Authorize Cards API](https://apis.io/collections/tap-payments/open-tap-payments-cards-api/)
+- [Tap Payments Authorize Charges API](https://apis.io/collections/tap-payments/open-tap-payments-charges-api/)
+- [Tap Payments Authorize Customers API](https://apis.io/collections/tap-payments/open-tap-payments-customers-api/)
+- [Tap Payments Authorize Invoices API](https://apis.io/collections/tap-payments/open-tap-payments-invoices-api/)
+- [Tap Payments Authorize Payouts API](https://apis.io/collections/tap-payments/open-tap-payments-payouts-api/)
+- [Tap Payments Authorize Refunds API](https://apis.io/collections/tap-payments/open-tap-payments-refunds-api/)
+- [Tap Payments Authorize Tokens API](https://apis.io/collections/tap-payments/open-tap-payments-tokens-api/)
 
-- Charges
-- Payments
-- Cards
+#### Security (2)
 
-#### Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [Documentation](https://developers.tap.company/docs/get-started)
-- [API Reference](https://developers.tap.company/reference/create-a-charge)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Tap Payments Authentication](https://apis.io/security/tap-payments/tap-payments-authentication/)
+- [Tap Payments Domain Security](https://apis.io/security/tap-payments/tap-payments-domain-security/)
 
-### Tap Payments Authorize API
+#### Plans and pricing (1)
 
-Authorize (hold) funds on a card without capturing, then capture later by creating a charge that references the authorize id. Supports void and auto-capture windows for two-step card payments.
+Published plans, tiers and prices.
 
-- **Human URL:** [https://developers.tap.company/reference/authorize](https://developers.tap.company/reference/authorize)
-- **Base URL:** `https://api.tap.company/v2`
+- [Tap Payments Plans Pricing](https://apis.io/plans/tap-payments/tap-payments-plans-pricing/)
 
-#### Tags
+#### Rate limits (1)
 
-- Authorize
-- Capture
-- Payments
+Published request limits.
 
-#### Properties
+- [Tap Payments Rate Limits](https://apis.io/rate-limits/tap-payments/tap-payments-rate-limits/)
 
-- [API Reference](https://developers.tap.company/reference/authorize)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### FinOps (1)
 
-### Tap Payments Refunds API
+What the API costs to run, by operation.
 
-Issue full or partial refunds against a captured charge, then retrieve and list refunds. Refunds reference the original charge id and settle back to the original payment method.
+- [Tap Payments Finops](https://apis.io/finops/tap-payments/tap-payments-finops/)
 
-- **Human URL:** [https://developers.tap.company/reference/create-a-refund](https://developers.tap.company/reference/create-a-refund)
-- **Base URL:** `https://api.tap.company/v2`
+## Where to find this API
 
-#### Tags
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-- Refunds
-- Payments
-
-#### Properties
-
-- [API Reference](https://developers.tap.company/reference/create-a-refund)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Tap Payments Customers API
-
-Create, retrieve, update, delete, and list customers. Tap issues a unique customer id (returned from Charges/Authorize) that you reuse to save cards, run recurring payments, and reconcile transactions.
-
-- **Human URL:** [https://developers.tap.company/reference/create-a-customer](https://developers.tap.company/reference/create-a-customer)
-- **Base URL:** `https://api.tap.company/v2`
-
-#### Tags
-
-- Customers
-- Vaulting
-
-#### Properties
-
-- [API Reference](https://developers.tap.company/reference/create-a-customer)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Tap Payments Tokens API
-
-Tokenize a raw card, an encrypted card, a saved card, or a wallet (Apple Pay, Samsung Pay, network token) into a single-use token id consumed by the Charges or Authorize APIs. Tokens cannot be stored or reused.
-
-- **Human URL:** [https://developers.tap.company/reference/tokens](https://developers.tap.company/reference/tokens)
-- **Base URL:** `https://api.tap.company/v2`
-
-#### Tags
-
-- Tokens
-- Cards
-- PCI
-
-#### Properties
-
-- [API Reference](https://developers.tap.company/reference/tokens)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Tap Payments Cards API
-
-Manage saved cards (card-on-file) attached to a customer - retrieve, verify, list, and delete stored cards for recurring and one-click checkout.
-
-- **Human URL:** [https://developers.tap.company/reference/retrieve-a-card](https://developers.tap.company/reference/retrieve-a-card)
-- **Base URL:** `https://api.tap.company/v2`
-
-#### Tags
-
-- Cards
-- Card on File
-
-#### Properties
-
-- [API Reference](https://developers.tap.company/reference/retrieve-a-card)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Tap Payments Invoices API
-
-Create, retrieve, update, and list hosted invoices that generate a payable link delivered by email or SMS. Invoices carry line items, currency, due dates, and customer details, and produce a charge when paid.
-
-- **Human URL:** [https://developers.tap.company/reference/create-an-invoice](https://developers.tap.company/reference/create-an-invoice)
-- **Base URL:** `https://api.tap.company/v2`
-
-#### Tags
-
-- Invoices
-- Billing
-
-#### Properties
-
-- [API Reference](https://developers.tap.company/reference/create-an-invoice)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Tap Payments Payouts API
-
-Retrieve and list payouts (settlements) that Tap deposits to your business bank account, with a download endpoint for reconciliation exports.
-
-- **Human URL:** [https://developers.tap.company/reference/retrieve-a-payout](https://developers.tap.company/reference/retrieve-a-payout)
-- **Base URL:** `https://api.tap.company/v2`
-
-#### Tags
-
-- Payouts
-- Settlement
-
-#### Properties
-
-- [API Reference](https://developers.tap.company/reference/retrieve-a-payout)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Tap Payments Business API
-
-Onboard and manage businesses, merchants, and their destinations for marketplace and platform use cases - create a business, list merchants, and look up destinations that funds settle to.
-
-- **Human URL:** [https://developers.tap.company/reference/create-a-business](https://developers.tap.company/reference/create-a-business)
-- **Base URL:** `https://api.tap.company/v2`
-
-#### Tags
-
-- Onboarding
-- Merchants
-- Marketplace
-
-#### Properties
-
-- [API Reference](https://developers.tap.company/reference/create-a-business)
-- [OpenAPI](openapi/tap-payments-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/tap-payments.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/tap-payments.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Tap Payments Webhooks
-
-Server-to-server HTTP POST callbacks (Instant Payment Notification) that Tap sends to your configured endpoint when a charge, authorize, invoice, or recurring payment changes state. Payloads are signed with an HMAC-SHA256 `hashstring` header for verification. This is HTTP push, not a WebSocket.
-
-- **Human URL:** [https://developers.tap.company/docs/webhook](https://developers.tap.company/docs/webhook)
-- **Base URL:** `https://api.tap.company/v2`
-
-#### Tags
-
-- Webhooks
-- Events
-- Notifications
-
-#### Properties
-
-- [Documentation](https://developers.tap.company/docs/webhook)
-
-## Common Properties
-
-- [Domain Security](security/tap-payments-domain-security.yml)
-- [Authentication](authentication/tap-payments-authentication.yml)
-- [GitHub Organization](https://github.com/Tap-Payments)
-- [LinkedIn](https://www.linkedin.com/company/tap-payments)
 - [Website](https://www.tap.company)
 - [Documentation](https://developers.tap.company/docs/get-started)
-- [Plans](plans/tap-payments-plans-pricing.yml)
-- [Rate Limits](rate-limits/tap-payments-rate-limits.yml)
-- [Fin Ops](finops/tap-payments-finops.yml)
+- [GitHub](https://github.com/Tap-Payments)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 25.0** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 52.1 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 7.9 |
+
+**Agent readiness 19.6** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 10.7** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/tap-payments/](https://apis.io/providers/tap-payments/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Tap Payments: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/tap-payments/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
